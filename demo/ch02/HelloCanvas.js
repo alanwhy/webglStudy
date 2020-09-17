@@ -3,7 +3,8 @@ function main() {
   // Retrieve <canvas> element
   var canvas = document.getElementById('webgl');
 
-  // Get the rendering context for WebGL
+  // Get the rendering context for WebGL 获取webGL绘图上下文
+  // 如果将第二个参数设置为true，则可以在控制台看见webgl的报错
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');

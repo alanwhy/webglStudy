@@ -21,9 +21,9 @@ function initShaders(gl, vshader, fshader) {
 
 /**
  * Create the linked program object
- * @param gl GL context
- * @param vshader a vertex shader program (string)
- * @param fshader a fragment shader program (string)
+ * @param gl GL context 指定渲染上下文
+ * @param vshader a vertex shader program (string) 指定顶点看色器程序代码（字符串）
+ * @param fshader a fragment shader program (string) 指定片元着色器程序代码(字符串）
  * @return created program object, or null if the creation has failed
  */
 function createProgram(gl, vshader, fshader) {
