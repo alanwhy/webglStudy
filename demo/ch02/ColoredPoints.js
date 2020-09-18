@@ -9,7 +9,7 @@ var VSHADER_SOURCE =
 
 // Fragment shader program
 var FSHADER_SOURCE =
-  'precision mediump float;\n' +
+  'precision mediump float;\n' + // 精度限定词：指定变量的范围和精度
   'uniform vec4 u_FragColor;\n' +  // uniform変数
   'void main() {\n' +
   '  gl_FragColor = u_FragColor;\n' +
@@ -39,7 +39,7 @@ function main() {
     return;
   }
 
-  // Get the storage location of u_FragColor
+  // Get the storage location of u_FragColor 获取u_FragColor变量的存储位置
   var u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
   if (!u_FragColor) {
     console.log('Failed to get the storage location of u_FragColor');
@@ -57,7 +57,7 @@ function main() {
 }
 
 var g_points = [];  // The array for the position of a mouse press
-var g_colors = [];  // The array to store the color of a point
+var g_colors = [];  // The array to store the color of a point 储存点颜色的数组
 function click(ev, gl, canvas, a_Position, u_FragColor) {
   var x = ev.clientX; // x coordinate of a mouse pointer
   var y = ev.clientY; // y coordinate of a mouse pointer
@@ -69,11 +69,11 @@ function click(ev, gl, canvas, a_Position, u_FragColor) {
   // Store the coordinates to g_points array
   g_points.push([x, y]);
   // Store the coordinates to g_points array
-  if (x >= 0.0 && y >= 0.0) {      // First quadrant
+  if (x >= 0.0 && y >= 0.0) {      // First quadrant 第一象限用红色
     g_colors.push([1.0, 0.0, 0.0, 1.0]);  // Red
-  } else if (x < 0.0 && y < 0.0) { // Third quadrant
+  } else if (x < 0.0 && y < 0.0) { // Third quadrant 第三象限用绿色
     g_colors.push([0.0, 1.0, 0.0, 1.0]);  // Green
-  } else {                         // Others
+  } else {                         // Others 其他象限用白色
     g_colors.push([1.0, 1.0, 1.0, 1.0]);  // White
   }
 
@@ -87,7 +87,7 @@ function click(ev, gl, canvas, a_Position, u_FragColor) {
 
     // Pass the position of a point to a_Position variable
     gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
-    // Pass the color of a point to u_FragColor variable
+    // Pass the color of a point to u_FragColor variable 将点的颜色传输到u_FragColor变量中
     gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
     // Draw
     gl.drawArrays(gl.POINTS, 0, 1);
