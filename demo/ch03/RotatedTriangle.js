@@ -19,7 +19,7 @@ var FSHADER_SOURCE =
   '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
   '}\n';
 
-// The rotation angle
+// The rotation angle 旋转角度
 var ANGLE = 90.0; 
 
 function main() {
@@ -46,8 +46,8 @@ function main() {
     return;
   }
 
-  // // Pass the data required to rotate the shape to the vertex shader
-  var radian = Math.PI * ANGLE / 180.0; // Convert to radians
+  // Pass the data required to rotate the shape to the vertex shader 将旋转图形所需的数据传输给顶点着色器
+  var radian = Math.PI * ANGLE / 180.0; // Convert to radians 转为弧度制
   var cosB = Math.cos(radian);
   var sinB = Math.sin(radian);
 

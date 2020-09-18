@@ -40,7 +40,8 @@ function main() {
     return;
   }
 
-  // Pass the translation distance to the vertex shader
+  // Pass the translation distance to the vertex shader 将平移距离传输给定点着色器
+  // 获取uniform变量的存储位置
   var u_Translation = gl.getUniformLocation(gl.program, 'u_Translation');
   if (!u_Translation) {
     console.log('Failed to get the storage location of u_Translation');

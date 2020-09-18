@@ -20,3 +20,21 @@
 - gl.vertexAttrib3f()以及同族函数
 
 ##### 20200918
+
+- ClickedPoints
+- ColoredPoints
+- uniform 变量
+- gl.uniform4f()以及同族函数
+
+- MultiPoint
+- gl.createBuffer()
+- gl.bindBuffer()
+- gl.bufferData()
+- gl.vertexAttribPointer()
+- gl.enableVertexAttribArray()
+- gl.drawArrays() 第 2、3 个参数
+- HelloTriangle
+- HelloRectangle
+- TranslatedTriangle 平移
+- RotatedTriangle 旋转
+- 变换矩阵：旋转
