@@ -30,7 +30,7 @@ function main() {
     return;
   }
 
-  // Write the positions of vertices to a vertex shader
+  // Write the positions of vertices to a vertex shader 设置顶点位置
   var n = initVertexBuffers(gl);
   if (n < 0) {
     console.log('Failed to set the positions of the vertices');
@@ -49,20 +49,20 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0.0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0.0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
-  var n = 3; // The number of vertices
+  var n = 3; // The number of vertices 顶点个数
 
-  // Create a buffer object
+  // Create a buffer object 创建缓冲区对象
   var vertexBuffer = gl.createBuffer();
   if (!vertexBuffer) {
     console.log('Failed to create the buffer object');
     return -1;
   }
 
-  // Bind the buffer object to target
+  // Bind the buffer object to target 将缓冲区对象绑定到目标
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-  // Write date into the buffer object
+  // Write date into the buffer object 向缓冲区对象写入数据
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
@@ -70,10 +70,10 @@ function initVertexBuffers(gl) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
-  // Assign the buffer object to a_Position variable
+  // Assign the buffer object to a_Position variable 将缓冲区对象分配给一个a_Position变量
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
 
-  // Enable the assignment to a_Position variable
+  // Enable the assignment to a_Position variable 连接a_Position变量与分配给它的缓冲区对象
   gl.enableVertexAttribArray(a_Position);
 
   return n;
