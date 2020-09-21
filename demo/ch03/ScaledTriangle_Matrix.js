@@ -32,7 +32,7 @@ function main() {
     console.log('Failed to intialize shaders.');
     return;
   }
- 
+
   // Write the positions of vertices to a vertex shader
   var n = initVertexBuffers(gl);
   if (n < 0) {
@@ -42,10 +42,10 @@ function main() {
 
   // Note: WebGL is column major order
   var xformMatrix = new Float32Array([
-      Sx,   0.0,  0.0,  0.0,
-      0.0,  Sy,   0.0,  0.0,
-      0.0,  0.0,  Sz,   0.0,
-      0.0,  0.0,  0.0,  1.0
+    Sx, 0.0, 0.0, 0.0,
+    0.0, Sy, 0.0, 0.0,
+    0.0, 0.0, Sz, 0.0,
+    0.0, 0.0, 0.0, 1.0
   ]);
 
   // Pass the rotation matrix to the vertex shader
@@ -68,7 +68,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
   var n = 3; // The number of vertices
 
