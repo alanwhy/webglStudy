@@ -40,11 +40,15 @@ function main() {
   // Create Matrix4 object for model transformation
   var modelMatrix = new Matrix4();
 
-  // Calculate a model matrix
-  var ANGLE = 60.0; // The rotation angle
-  var Tx = 0.5;     // Translation distance
-  modelMatrix.setRotate(ANGLE, 0, 0, 1);  // Set rotation matrix
-  modelMatrix.translate(Tx, 0, 0);        // Multiply modelMatrix by the calculated translation matrix
+  // Calculate a model matrix 计算模型矩阵
+  var ANGLE = 60.0; // The rotation angle 旋转角
+  var Tx = 0.5;     // Translation distance 平移距离
+  modelMatrix.setRotate(ANGLE, 0, 0, 1);  // Set rotation matrix 设置模型矩阵为旋转矩阵
+  modelMatrix.translate(Tx, 0, 0);        // Multiply modelMatrix by the calculated translation matrix 将模型矩阵乘以平移矩阵
+
+  // 如果先平移，后旋转，绘制的结果是不一样的，因为矩阵的A*B不一定等于B*A
+  // modelMatrix.setTranslate(Tx, 0, 0)
+  // modelMatrix.rotate(ANGLE, 0, 0, 1)
 
   // Pass the model matrix to the vertex shader
   var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
@@ -66,7 +70,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0, 0.3,   -0.3, -0.3,   0.3, -0.3
+    0, 0.3, -0.3, -0.3, 0.3, -0.3
   ]);
   var n = 3; // The number of vertices
 

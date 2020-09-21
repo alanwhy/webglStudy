@@ -45,7 +45,7 @@ function main() {
 
   // Get storage location of u_ModelMatrix
   var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-  if (!u_ModelMatrix) { 
+  if (!u_ModelMatrix) {
     console.log('Failed to get the storage location of u_ModelMatrix');
     return;
   }
@@ -56,7 +56,7 @@ function main() {
   var modelMatrix = new Matrix4();
 
   // Start drawing
-  var tick = function() {
+  var tick = function () {
     currentAngle = animate(currentAngle);  // Update the rotation angle
     draw(gl, n, currentAngle, modelMatrix, u_ModelMatrix);   // Draw the triangle
     requestAnimationFrame(tick, canvas); // Request that the browser ?calls tick
@@ -65,8 +65,8 @@ function main() {
 }
 
 function initVertexBuffers(gl) {
-  var vertices = new Float32Array ([
-    0, 0.5,   -0.5, -0.5,   0.5, -0.5
+  var vertices = new Float32Array([
+    0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
   var n = 3;   // The number of vertices
 
@@ -84,7 +84,7 @@ function initVertexBuffers(gl) {
 
   // Assign the buffer object to a_Position variable
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-  if(a_Position < 0) {
+  if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
@@ -100,7 +100,7 @@ function draw(gl, n, currentAngle, modelMatrix, u_ModelMatrix) {
   // Set the rotation matrix
   modelMatrix.setRotate(currentAngle, 0, 0, 1);
   modelMatrix.translate(0.35, 0, 0);
- 
+
   // Pass the rotation matrix to the vertex shader
   gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
 

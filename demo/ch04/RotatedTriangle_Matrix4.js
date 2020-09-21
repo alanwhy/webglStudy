@@ -37,10 +37,10 @@ function main() {
     return;
   }
 
-  // Create Matrix4 object for the rotation matrix
+  // Create Matrix4 object for the rotation matrix 为旋转矩阵创建Matrix4对象
   var xformMatrix = new Matrix4();
 
-  // Set the rotation matrix
+  // Set the rotation matrix 将xformMatrix设置为旋转矩阵
   var ANGLE = 90.0; // The rotation angle
   xformMatrix.setRotate(ANGLE, 0, 0, 1);
 
@@ -50,6 +50,7 @@ function main() {
     console.log('Failed to get the storage location of u_xformMatrix');
     return;
   }
+  // 将旋转矩阵传输给顶点着色器 注意是xformMatrix.elements
   gl.uniformMatrix4fv(u_xformMatrix, false, xformMatrix.elements);
 
   // Specify the color for clearing <canvas>
@@ -64,7 +65,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
   var n = 3; // The number of vertices
 
