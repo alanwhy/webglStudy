@@ -50,3 +50,9 @@
 - 动画
 - requestAnimationFrame()
 - 按钮控制旋转速度：通过修改每秒的旋转角度
+- MultiAttributeSize.js
+- 创建多个缓冲区 => `gl.vertexAttriPointer()` => MultiAttributeSize_Interleaved.js
+- varying 变量 => MultiAttributeColor.js
+- ColoredTriangle.js
+- 几何形状的装配及光栅化 <= 片元着色器
+- varying 的作用及内插过程
