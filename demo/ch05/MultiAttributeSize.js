@@ -50,7 +50,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0.0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0.0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
   var n = 3;
 
@@ -58,8 +58,8 @@ function initVertexBuffers(gl) {
     10.0, 20.0, 30.0  // Point sizes
   ]);
 
-  // Create a buffer object
-  var vertexBuffer = gl.createBuffer();  
+  // Create a buffer object 创建缓冲区对象
+  var vertexBuffer = gl.createBuffer();
   var sizeBuffer = gl.createBuffer();
   if (!vertexBuffer || !sizeBuffer) {
     console.log('Failed to create the buffer object');
@@ -70,18 +70,18 @@ function initVertexBuffers(gl) {
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    if(a_Position < 0) {
+  if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(a_Position);
 
-  // Bind the point size buffer object to target
+  // Bind the point size buffer object to target 将顶点尺寸写入缓冲区对象并开启
   gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
   var a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
-  if(a_PointSize < 0) {
+  if (a_PointSize < 0) {
     console.log('Failed to get the storage location of a_PointSize');
     return -1;
   }

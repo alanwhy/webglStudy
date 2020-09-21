@@ -12,7 +12,7 @@ var FSHADER_SOURCE =
   'uniform float u_Width;\n' +
   'uniform float u_Height;\n' +
   'void main() {\n' +
-  '  gl_FragColor = vec4(gl_FragCoord.x/u_Width, 0.0, gl_FragCoord.y/u_Height, 1.0);\n' +
+  '  gl_FragColor = vec4(gl_FragCoord.x/u_Width, 0.0, gl_FragCoord.y/u_Height, 1.0);\n' + // 形成渐变的关键代码
   '}\n';
 
 function main() {
@@ -51,7 +51,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array([
-    0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0, 0.5, -0.5, -0.5, 0.5, -0.5
   ]);
   var n = 3; // The number of vertices
 

@@ -50,15 +50,15 @@ function main() {
 
 function initVertexBuffers(gl) {
   var verticesSizes = new Float32Array([
-    // Coordinate and size of points
-     0.0,  0.5,  10.0,  // the 1st point
-    -0.5, -0.5,  20.0,  // the 2nd point
-     0.5, -0.5,  30.0   // the 3rd point
+    // Coordinate and size of points 顶点坐标和点的尺寸
+    0.0, 0.5, 10.0,  // the 1st point
+    -0.5, -0.5, 20.0,  // the 2nd point
+    0.5, -0.5, 30.0   // the 3rd point
   ]);
   var n = 3; // The number of vertices
 
   // Create a buffer object
-  var vertexSizeBuffer = gl.createBuffer();  
+  var vertexSizeBuffer = gl.createBuffer();
   if (!vertexSizeBuffer) {
     console.log('Failed to create the buffer object');
     return -1;
@@ -68,6 +68,7 @@ function initVertexBuffers(gl) {
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexSizeBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, verticesSizes, gl.STATIC_DRAW);
 
+  // 将verticesSizes数组中每个元素的大小（字节数）存储起来
   var FSIZE = verticesSizes.BYTES_PER_ELEMENT;
   //Get the storage location of a_Position, assign and enable buffer
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
@@ -80,7 +81,7 @@ function initVertexBuffers(gl) {
 
   // Get the storage location of a_PointSize
   var a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
-  if(a_PointSize < 0) {
+  if (a_PointSize < 0) {
     console.log('Failed to get the storage location of a_PointSize');
     return -1;
   }
