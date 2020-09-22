@@ -70,3 +70,4 @@
 - `gl.uniform1i()`
 - 片元着色器获取纹理颜色`texture2D()`
 - MultiTexture.js
+- OpenGL ES 着色器语法的一系列基础语法、规则、逻辑语法、取样器、函数、变量等
