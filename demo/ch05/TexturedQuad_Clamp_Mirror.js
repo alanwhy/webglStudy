@@ -57,10 +57,10 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesTexCoords = new Float32Array([
     // Vertex coordinate, Texture coordinate
-    -0.5,  0.5,   -0.3,  1.7,
-    -0.5, -0.5,   -0.3, -0.2,
-     0.5,  0.5,    1.7,  1.7,
-     0.5, -0.5,    1.7, -0.2
+    -0.5, 0.5, -0.3, 1.7,
+    -0.5, -0.5, -0.3, -0.2,
+    0.5, 0.5, 1.7, 1.7,
+    0.5, -0.5, 1.7, -0.2
   ]);
   var n = 4; // The number of vertices
 
@@ -119,7 +119,7 @@ function initTextures(gl, n) {
   // Create the image object
   var image = new Image();
   // Register the event handler to be called when image loading is completed
-  image.onload = function(){ loadTexture(gl, n, texture, u_Sampler, image); };
+  image.onload = function () { loadTexture(gl, n, texture, u_Sampler, image); };
   // Tell the browser to load an Image
   image.src = '../resources/sky.jpg';
 
@@ -133,16 +133,16 @@ function loadTexture(gl, n, texture, u_Sampler, image) {
   // Bind the texture object to the target
   gl.bindTexture(gl.TEXTURE_2D, texture);
 
-  // Set the texture parameter
+  // Set the texture parameter 配置纹理参数
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   // Set the image to texture
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
-  
+
   // Set the texture unit 0 to the sampler
   gl.uniform1i(u_Sampler, 0);
-  
+
   gl.clear(gl.COLOR_BUFFER_BIT);  // Clear <canvas>
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);  // Draw the rectangle

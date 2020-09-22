@@ -133,11 +133,11 @@ function initTextures(gl, n) {
 
   return true;
 }
-// Specify whether the texture unit is ready to use
+// Specify whether the texture unit is ready to use 标记纹理单元是否已经就绪
 var g_texUnit0 = false, g_texUnit1 = false; 
 function loadTexture(gl, n, texture, u_Sampler, image, texUnit) {
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);// Flip the image's y-axis
-  // Make the texture unit active
+  // Make the texture unit active 激活纹理
   if (texUnit == 0) {
     gl.activeTexture(gl.TEXTURE0);
     g_texUnit0 = true;
@@ -159,6 +159,6 @@ function loadTexture(gl, n, texture, u_Sampler, image, texUnit) {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   if (g_texUnit0 && g_texUnit1) {
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);   // Draw the rectangle
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);   // Draw the rectangle 都就绪后 绘制一个矩形
   }
 }

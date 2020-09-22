@@ -10,7 +10,7 @@
 
 ### 学习记录
 
-##### 20200917
+#### 20200917
 
 - WebGL 概述
 - Canvas
@@ -23,7 +23,7 @@
 - attribute 变量
 - `gl.vertexAttrib3f()`以及同族函数
 
-##### 20200918
+#### 20200918
 
 - ClickedPoints
 - ColoredPoints
@@ -42,7 +42,7 @@
 - RotatedTriangle 旋转
 - 变换矩阵：旋转 3\*3
 
-##### 20200921
+#### 20200921
 
 - 变换矩阵：平移、4\*4 选择矩阵、缩放
 - 矩阵变换库：cuon-matrix.js
@@ -56,3 +56,17 @@
 - ColoredTriangle.js
 - 几何形状的装配及光栅化 <= 片元着色器
 - varying 的作用及内插过程
+
+#### 20200922
+
+- 纹理坐标
+- TexturedQuad.js
+- 设置纹理、配置和加载纹理、为 webgl 加载纹理
+- 图像 Y 轴翻转
+- `gl.activeTexture()`
+- `gl.bindTexture()`
+- `gl.texParameteri()`
+- `gl.texImage2D()`
+- `gl.uniform1i()`
+- 片元着色器获取纹理颜色`texture2D()`
+- MultiTexture.js
