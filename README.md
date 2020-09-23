@@ -73,3 +73,14 @@
 - OpenGL ES 着色器语法的一系列基础语法、规则、逻辑语法、取样器、函数、变量等
 - 三维：视点和视线
 - 视点、观察目标点、上方向
+
+#### 20200923
+
+- LookAtTriangles.js & LookAtRotatedTriangles.js
+- 键盘改变视点 LookAtTrianglesWithKeys.js
+- 可视空间：正射类型 OrthoView.js 重点
+- 可视空间：透视投影 PerspectiveView.js 重点
+- 隐藏面消除 DepthBuffer.js
+- 深度冲突 Zfighting.js
+- 立方体 HelloCube.js 重点、难点
+- 指定颜色的立方体 ColoredCube.js 重点、难点

@@ -48,10 +48,10 @@ function main() {
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-  // Get the storage locations of u_ViewMatrix and u_ProjMatrix variables
+  // Get the storage locations of u_ViewMatrix and u_ProjMatrix variables 获取u_viewMatrix和u_ProjMatrix的存储地址
   var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
   var u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
-  if (!u_ViewMatrix || !u_ProjMatrix) { 
+  if (!u_ViewMatrix || !u_ProjMatrix) {
     console.log('Failed to get u_ViewMatrix or u_ProjMatrix');
     return;
   }
@@ -59,9 +59,9 @@ function main() {
   // Create the matrix to specify the view matrix
   var viewMatrix = new Matrix4();
   // Register the event handler to be called on key press
- document.onkeydown = function(ev){ keydown(ev, gl, n, u_ViewMatrix, viewMatrix); };
+  document.onkeydown = function (ev) { keydown(ev, gl, n, u_ViewMatrix, viewMatrix); };
 
-  // Create the matrix to specify the viewing volume and pass it to u_ProjMatrix
+  // Create the matrix to specify the viewing volume and pass it to u_ProjMatrix 创建指定可视空间的矩阵并传给u_ProjMatrix变量
   var projMatrix = new Matrix4();
   projMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, 0.0, 2.0);
   gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
@@ -72,22 +72,22 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesColors = new Float32Array([
     // Vertex coordinates and color
-     0.0,  0.5,  -0.4,  0.4,  1.0,  0.4, // The back green one
-    -0.5, -0.5,  -0.4,  0.4,  1.0,  0.4,
-     0.5, -0.5,  -0.4,  1.0,  0.4,  0.4, 
-   
-     0.5,  0.4,  -0.2,  1.0,  0.4,  0.4, // The middle yellow one
-    -0.5,  0.4,  -0.2,  1.0,  1.0,  0.4,
-     0.0, -0.6,  -0.2,  1.0,  1.0,  0.4, 
+    0.0, 0.5, -0.4, 0.4, 1.0, 0.4, // The back green one
+    -0.5, -0.5, -0.4, 0.4, 1.0, 0.4,
+    0.5, -0.5, -0.4, 1.0, 0.4, 0.4,
 
-     0.0,  0.5,   0.0,  0.4,  0.4,  1.0,  // The front blue one 
-    -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,
-     0.5, -0.5,   0.0,  1.0,  0.4,  0.4, 
+    0.5, 0.4, -0.2, 1.0, 0.4, 0.4, // The middle yellow one
+    -0.5, 0.4, -0.2, 1.0, 1.0, 0.4,
+    0.0, -0.6, -0.2, 1.0, 1.0, 0.4,
+
+    0.0, 0.5, 0.0, 0.4, 0.4, 1.0,  // The front blue one 
+    -0.5, -0.5, 0.0, 0.4, 0.4, 1.0,
+    0.5, -0.5, 0.0, 1.0, 0.4, 0.4,
   ]);
   var n = 9;
 
   // Create a buffer object
-  var vertexColorbuffer = gl.createBuffer();  
+  var vertexColorbuffer = gl.createBuffer();
   if (!vertexColorbuffer) {
     console.log('Failed to create the buffer object');
     return -1;
@@ -100,7 +100,7 @@ function initVertexBuffers(gl) {
   var FSIZE = verticesColors.BYTES_PER_ELEMENT;
   // Assign the buffer object to a_Position and enable the assignment
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-  if(a_Position < 0) {
+  if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
@@ -108,7 +108,7 @@ function initVertexBuffers(gl) {
   gl.enableVertexAttribArray(a_Position);
   // Assign the buffer object to a_Color and enable the assignment
   var a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-  if(a_Color < 0) {
+  if (a_Color < 0) {
     console.log('Failed to get the storage location of a_Color');
     return -1;
   }
@@ -120,13 +120,13 @@ function initVertexBuffers(gl) {
 
 var g_EyeX = 0.20, g_EyeY = 0.25, g_EyeZ = 0.25; // Eye position
 function keydown(ev, gl, n, u_ViewMatrix, viewMatrix) {
-    if(ev.keyCode == 39) { // The right arrow key was pressed
-      g_EyeX += 0.01;
-    } else 
+  if (ev.keyCode == 39) { // The right arrow key was pressed
+    g_EyeX += 0.01;
+  } else
     if (ev.keyCode == 37) { // The left arrow key was pressed
       g_EyeX -= 0.01;
     } else { return; } // Prevent the unnecessary drawing
-    draw(gl, n, u_ViewMatrix, viewMatrix);    
+  draw(gl, n, u_ViewMatrix, viewMatrix);
 }
 
 function draw(gl, n, u_ViewMatrix, viewMatrix) {

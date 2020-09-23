@@ -66,7 +66,7 @@ function main() {
   // Clear color and depth buffer
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  // Draw the cube
+  // Draw the cube 绘制立方体
   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
 }
 
@@ -80,7 +80,7 @@ function initVertexBuffers(gl) {
   //  |/      |/
   //  v2------v3
   var verticesColors = new Float32Array([
-    // Vertex coordinates and color
+    // Vertex coordinates and color 顶点坐标及颜色
      1.0,  1.0,  1.0,     1.0,  1.0,  1.0,  // v0 White
     -1.0,  1.0,  1.0,     1.0,  0.0,  1.0,  // v1 Magenta
     -1.0, -1.0,  1.0,     1.0,  0.0,  0.0,  // v2 Red
@@ -91,7 +91,7 @@ function initVertexBuffers(gl) {
     -1.0, -1.0, -1.0,     0.0,  0.0,  0.0   // v7 Black
   ]);
 
-  // Indices of the vertices
+  // Indices of the vertices 顶点索引
   var indices = new Uint8Array([
     0, 1, 2,   0, 2, 3,    // front
     0, 3, 4,   0, 4, 5,    // right
@@ -101,19 +101,19 @@ function initVertexBuffers(gl) {
     4, 7, 6,   4, 6, 5     // back
  ]);
 
-  // Create a buffer object
+  // Create a buffer object 创建缓冲区对象
   var vertexColorBuffer = gl.createBuffer();
   var indexBuffer = gl.createBuffer();
   if (!vertexColorBuffer || !indexBuffer) {
     return -1;
   }
 
-  // Write the vertex coordinates and color to the buffer object
+  // Write the vertex coordinates and color to the buffer object 将顶点坐标和颜色写入缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, verticesColors, gl.STATIC_DRAW);
 
   var FSIZE = verticesColors.BYTES_PER_ELEMENT;
-  // Assign the buffer object to a_Position and enable the assignment
+  // Assign the buffer object to a_Position and enable the assignment 将缓冲区内顶点坐标数据分配给a_Position并开启之
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
   if(a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
@@ -130,7 +130,7 @@ function initVertexBuffers(gl) {
   gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE * 6, FSIZE * 3);
   gl.enableVertexAttribArray(a_Color);
 
-  // Write the indices to the buffer object
+  // Write the indices to the buffer object 将顶点索引数据写入缓冲区对象
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 

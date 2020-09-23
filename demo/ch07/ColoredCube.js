@@ -112,7 +112,7 @@ function initVertexBuffers(gl) {
   if (!indexBuffer) 
     return -1;
 
-  // Write the vertex coordinates and color to the buffer object
+  // Write the vertex coordinates and color to the buffer object 将顶点坐标和颜色写人缓冲区对象
   if (!initArrayBuffer(gl, vertices, 3, gl.FLOAT, 'a_Position'))
     return -1;
 

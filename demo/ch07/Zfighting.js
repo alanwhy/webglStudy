@@ -50,14 +50,14 @@ function main() {
 
   // Get the storage locations of u_ViewProjMatrix
   var u_ViewProjMatrix = gl.getUniformLocation(gl.program, 'u_ViewProjMatrix');
-  if (!u_ViewProjMatrix) { 
+  if (!u_ViewProjMatrix) {
     console.log('Failed to get the storage locations of u_ViewProjMatrix');
     return;
   }
 
   var viewProjMatrix = new Matrix4();
   // Set the eye point, look-at point, and up vector.
-  viewProjMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
+  viewProjMatrix.setPerspective(30, canvas.width / canvas.height, 1, 100);
   viewProjMatrix.lookAt(3.06, 2.5, 10.0, 0, 0, -2, 0, 1, 0);
 
   // Pass the view projection matrix to u_ViewProjMatrix
@@ -66,29 +66,29 @@ function main() {
   // Clear color and depth buffer
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  // Enable the polygon offset function
+  // Enable the polygon offset function 启用多边形偏移
   gl.enable(gl.POLYGON_OFFSET_FILL);
   // Draw the triangles
-  gl.drawArrays(gl.TRIANGLES, 0, n/2);   // The green triangle
-    gl.polygonOffset(1.0, 1.0);          // Set the polygon offset
-  gl.drawArrays(gl.TRIANGLES, n/2, n/2); // The yellow triangle
+  gl.drawArrays(gl.TRIANGLES, 0, n / 2);   // The green triangle
+  gl.polygonOffset(1.0, 1.0);          // Set the polygon offset 设置多边形偏移
+  gl.drawArrays(gl.TRIANGLES, n / 2, n / 2); // The yellow triangle
 }
 
 function initVertexBuffers(gl) {
   var verticesColors = new Float32Array([
     // Vertex coordinates and color
-     0.0,  2.5,  -5.0,  0.4,  1.0,  0.4, // The green triangle
-    -2.5, -2.5,  -5.0,  0.4,  1.0,  0.4,
-     2.5, -2.5,  -5.0,  1.0,  0.4,  0.4, 
+    0.0, 2.5, -5.0, 0.4, 1.0, 0.4, // The green triangle
+    -2.5, -2.5, -5.0, 0.4, 1.0, 0.4,
+    2.5, -2.5, -5.0, 1.0, 0.4, 0.4,
 
-     0.0,  3.0,  -5.0,  1.0,  0.4,  0.4, // The yellow triagle
-    -3.0, -3.0,  -5.0,  1.0,  1.0,  0.4,
-     3.0, -3.0,  -5.0,  1.0,  1.0,  0.4, 
+    0.0, 3.0, -5.0, 1.0, 0.4, 0.4, // The yellow triagle
+    -3.0, -3.0, -5.0, 1.0, 1.0, 0.4,
+    3.0, -3.0, -5.0, 1.0, 1.0, 0.4,
   ]);
   var n = 6;
 
   // Create a buffer object
-  var vertexColorbuffer = gl.createBuffer();  
+  var vertexColorbuffer = gl.createBuffer();
   if (!vertexColorbuffer) {
     console.log('Failed to create the buffer object');
     return -1;
@@ -101,7 +101,7 @@ function initVertexBuffers(gl) {
   var FSIZE = verticesColors.BYTES_PER_ELEMENT;
   // Assign the buffer object to a_Position and enable the assignment
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-  if(a_Position < 0) {
+  if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
@@ -109,7 +109,7 @@ function initVertexBuffers(gl) {
   gl.enableVertexAttribArray(a_Position);
   // Assign the buffer object to a_Color and enable the assignment
   var a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-  if(a_Color < 0) {
+  if (a_Color < 0) {
     console.log('Failed to get the storage location of a_Color');
     return -1;
   }

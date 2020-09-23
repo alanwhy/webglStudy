@@ -49,7 +49,7 @@ function main() {
 
   // Get the storage location of u_ModelViewMatrix and u_ModelMatrix
   var u_ModelViewMatrix = gl.getUniformLocation(gl.program, 'u_ModelViewMatrix');
-  if(!u_ModelViewMatrix) { 
+  if (!u_ModelViewMatrix) {
     console.log('u_ModelViewMatrixの格納場所の取得に失敗');
     return;
   }
@@ -62,8 +62,12 @@ function main() {
   var modelMatrix = new Matrix4();
   modelMatrix.setRotate(-10, 0, 0, 1);
 
-  // Multiply model matrix to view matrix
+  // Multiply model matrix to view matrix 两个矩阵相乘 优化性能
   var modelViewMatrix = viewMatrix.multiply(modelMatrix);
+
+  // line 58-66 等价于下面
+  // var modelViewMatrix = new Matrix4();
+  // modelViewMatrix.setLookAt(0.20, 0.25, 0.25, 0, 0, 0, 0, 1, 0).rotate(-10, 0, 0, 1)
 
   // Pass the model view projection matrix
   gl.uniformMatrix4fv(u_ModelViewMatrix, false, modelViewMatrix.elements);
@@ -78,22 +82,22 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesColors = new Float32Array([
     // Vertex coordinates and color
-     0.0,  0.5,  -0.4,  0.4,  1.0,  0.4, // The back green one
-    -0.5, -0.5,  -0.4,  0.4,  1.0,  0.4,
-     0.5, -0.5,  -0.4,  1.0,  0.4,  0.4, 
-   
-     0.5,  0.4,  -0.2,  1.0,  0.4,  0.4, // The middle yellow one
-    -0.5,  0.4,  -0.2,  1.0,  1.0,  0.4,
-     0.0, -0.6,  -0.2,  1.0,  1.0,  0.4, 
+    0.0, 0.5, -0.4, 0.4, 1.0, 0.4, // The back green one
+    -0.5, -0.5, -0.4, 0.4, 1.0, 0.4,
+    0.5, -0.5, -0.4, 1.0, 0.4, 0.4,
 
-     0.0,  0.5,   0.0,  0.4,  0.4,  1.4,  // The front blue one 
-    -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,
-     0.5, -0.5,   0.0,  1.0,  0.4,  0.4, 
+    0.5, 0.4, -0.2, 1.0, 0.4, 0.4, // The middle yellow one
+    -0.5, 0.4, -0.2, 1.0, 1.0, 0.4,
+    0.0, -0.6, -0.2, 1.0, 1.0, 0.4,
+
+    0.0, 0.5, 0.0, 0.4, 0.4, 1.4,  // The front blue one 
+    -0.5, -0.5, 0.0, 0.4, 0.4, 1.0,
+    0.5, -0.5, 0.0, 1.0, 0.4, 0.4,
   ]);
   var n = 9;
 
   // Create a buffer object
-  var vertexColorBuffer = gl.createBuffer();  
+  var vertexColorBuffer = gl.createBuffer();
   if (!vertexColorBuffer) {
     console.log('Failed to create the buffer object');
     return -1;
@@ -106,7 +110,7 @@ function initVertexBuffers(gl) {
   var FSIZE = verticesColors.BYTES_PER_ELEMENT;
   // Assign the buffer object to a_Position and enable the assignment
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-  if(a_Position < 0) {
+  if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
@@ -114,7 +118,7 @@ function initVertexBuffers(gl) {
   gl.enableVertexAttribArray(a_Position);
   // Assign the buffer object to a_Color and enable the assignment
   var a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-  if(a_Color < 0) {
+  if (a_Color < 0) {
     console.log('Failed to get the storage location of a_Color');
     return -1;
   }

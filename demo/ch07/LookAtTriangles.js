@@ -37,7 +37,7 @@ function main() {
     return;
   }
 
-  // Set the vertex coordinates and color (the blue triangle is in the front)
+  // Set the vertex coordinates and color (the blue triangle is in the front) 设置顶点坐标和颜色（蓝色三角形在最前面）
   var n = initVertexBuffers(gl);
   if (n < 0) {
     console.log('Failed to set the vertex information');
@@ -54,11 +54,11 @@ function main() {
     return;
   }
 
-  // Set the matrix to be used for to set the camera view
+  // Set the matrix to be used for to set the camera view 设置视点、视线和上方向
   var viewMatrix = new Matrix4();
   viewMatrix.setLookAt(0.20, 0.25, 0.25, 0, 0, 0, 0, 1, 0);
 
-  // Set the view matrix
+  // Set the view matrix 将视图矩阵传给u_viewMatrix变量
   gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
 
   // Clear <canvas>
@@ -70,7 +70,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var verticesColors = new Float32Array([
-    // Vertex coordinates and color(RGBA)
+    // Vertex coordinates and color(RGBA) 顶点坐标和颜色
     0.0, 0.5, -0.4, 0.4, 1.0, 0.4, // The back green one
     -0.5, -0.5, -0.4, 0.4, 1.0, 0.4,
     0.5, -0.5, -0.4, 1.0, 0.4, 0.4,

@@ -70,14 +70,14 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesColors = new Float32Array([
     // Vertex coordinates and color
-     1,  1,  1,     0,  0,  0,  // White
-    -1,  1,  1,     0,  0,  0,  // White
-    -1, -1,  1,     0,  0,  0,  // White
-     1, -1,  1,     0,  0,  0,  // White
-     1, -1, -1,     0,  0,  0,  // White
-     1,  1, -1,     0,  0,  0,  // White
-    -1,  1, -1,     0,  0,  0,  // White
-    -1, -1, -1,     0,  0,  0   // White
+     1,  1,  1,     1.0,  1.0,  1.0,  // White
+    -1,  1,  1,     1.0,  1.0,  1.0,  // White
+    -1, -1,  1,     1.0,  1.0,  1.0,  // White
+     1, -1,  1,     1.0,  1.0,  1.0,  // White
+     1, -1, -1,     1.0,  1.0,  1.0,  // White
+     1,  1, -1,     1.0,  1.0,  1.0,  // White
+    -1,  1, -1,     1.0,  1.0,  1.0,  // White
+    -1, -1, -1,     1.0,  1.0,  1.0   // White
   ]);
 
   // Indices of the vertices
