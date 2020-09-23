@@ -6,6 +6,23 @@
 
 ### 源码 demo 目录：/demo
 
+#### ch02
+
+- [HelloPoint1](https://alanwhy.github.io/webglStudy/demo/ch02/HelloPoint1.html)
+- [HelloPoint2](https://alanwhy.github.io/webglStudy/demo/ch02/HelloPoint2.html)
+- [HelloCanvas](https://alanwhy.github.io/webglStudy/demo/ch02/HelloCanvas.html)
+- [DrawRectangle](https://alanwhy.github.io/webglStudy/demo/ch02/DrawRectangle.html)
+- [ColoredPoints](https://alanwhy.github.io/webglStudy/demo/ch02/ColoredPoints.html)
+- [ClickedPoints](https://alanwhy.github.io/webglStudy/demo/ch02/ClickedPoints.html)
+
+#### ch03
+
+#### ch04
+
+#### ch05
+
+#### ch07
+
 ### 原书籍路径：book/WebGL 编程指南.pdf
 
 ### 学习记录
