@@ -7,7 +7,7 @@ var VSHADER_SOURCE =
   'uniform mat4 u_MvpMatrix;\n' +
   'uniform vec3 u_DiffuseLight;\n' +   // Diffuse light color
   'uniform vec3 u_LightDirection;\n' + // Diffuse light direction (in the world coordinate, normalized)
-  'uniform vec3 u_AmbientLight;\n' +   // Color of an ambient light
+  'uniform vec3 u_AmbientLight;\n' +   // Color of an ambient light 环境光颜色
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
@@ -17,9 +17,9 @@ var VSHADER_SOURCE =
   '  float nDotL = max(dot(u_LightDirection, normal), 0.0);\n' +
      // Calculate the color due to diffuse reflection
   '  vec3 diffuse = u_DiffuseLight * a_Color.rgb * nDotL;\n' +
-     // Calculate the color due to ambient reflection
+     // Calculate the color due to ambient reflection 计算环境光产生的反射光颜色
   '  vec3 ambient = u_AmbientLight * a_Color.rgb;\n' +
-     // Add the surface colors due to diffuse reflection and ambient reflection
+     // Add the surface colors due to diffuse reflection and ambient reflection 将以上两者相加得到物体最终的颜色
   '  v_Color = vec4(diffuse + ambient, a_Color.a);\n' + 
   '}\n';
 
@@ -61,7 +61,7 @@ function main() {
   gl.clearColor(0, 0, 0, 1);
   gl.enable(gl.DEPTH_TEST);
 
-  // Get the storage locations of uniform variables and so on
+  // Get the storage locations of uniform variables and so on 获取uniform变量等的存储地址
   var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
   var u_DiffuseLight = gl.getUniformLocation(gl.program, 'u_DiffuseLight');
   var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
@@ -77,7 +77,7 @@ function main() {
   var lightDirection = new Vector3([0.5, 3.0, 4.0]);
   lightDirection.normalize();     // Normalize
   gl.uniform3fv(u_LightDirection, lightDirection.elements);
-  // Set the ambient light
+  // Set the ambient light 传入环境光颜色
   gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
 
   // Calculate the view projection matrix

@@ -5,19 +5,19 @@ var VSHADER_SOURCE =
   'attribute vec4 a_Color;\n' +
   'attribute vec4 a_Normal;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform mat4 u_ModelMatrix;\n' +   // Model matrix
+  'uniform mat4 u_ModelMatrix;\n' +   // Model matrix 模型矩阵
   'uniform mat4 u_NormalMatrix;\n' +  // Transformation matrix of the normal
   'uniform vec3 u_LightColor;\n' +    // Light color
-  'uniform vec3 u_LightPosition;\n' + // Position of the light source (in the world coordinate system)
+  'uniform vec3 u_LightPosition;\n' + // Position of the light source (in the world coordinate system) 光源位置（世界坐标系）
   'uniform vec3 u_AmbientLight;\n' +  // Ambient light color
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
      // Recalculate the normal based on the model matrix and make its length 1.
   '  vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));\n' +
-     // Calculate world coordinate of vertex
+     // Calculate world coordinate of vertex 计算顶点的世界坐标
   '  vec4 vertexPosition = u_ModelMatrix * a_Position;\n' +
-     // Calculate the light direction and make it 1.0 in length
+     // Calculate the light direction and make it 1.0 in length 计算光线方向并归一化
   '  vec3 lightDirection = normalize(u_LightPosition - vec3(vertexPosition));\n' +
      // The dot product of the light direction and the normal
   '  float nDotL = max(dot(lightDirection, normal), 0.0);\n' +

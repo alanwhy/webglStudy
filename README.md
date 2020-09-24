@@ -1,10 +1,12 @@
 # 《WebGL 编程指南》学习笔记
 
-### 重要笔记说明目录：/md
+### 原书籍路径：`/book/WebGL 编程指南.pdf`
 
-### 笔记截图目录：/img
+### 重要笔记说明目录：`/md`
 
-### 源码 demo 目录：/demo
+### 笔记截图目录：`/img`
+
+### 源码 demo 目录：`/demo`
 
 #### ch02
 
@@ -70,7 +72,18 @@
 - [PerspectiveView](https://alanwhy.github.io/webglStudy/demo/ch07/PerspectiveView.html)
 - [Zfighting](https://alanwhy.github.io/webglStudy/demo/ch07/Zfighting.html)
 
-### 原书籍路径：book/WebGL 编程指南.pdf
+#### ch08
+
+- [LightedCube_ambient](https://alanwhy.github.io/webglStudy/demo/ch08/LightedCube_ambient.html)
+- [LightedCube_animation](https://alanwhy.github.io/webglStudy/demo/ch08/LightedCube_animation.html)
+- [LightedCube_perFragment](https://alanwhy.github.io/webglStudy/demo/ch08/LightedCube_perFragment.html)
+- [LightedCube](https://alanwhy.github.io/webglStudy/demo/ch08/LightedCube.html)
+- [LightedTranslatedRotatedCube](https://alanwhy.github.io/webglStudy/demo/ch08/LightedTranslatedRotatedCube.html)
+- [PointLightedCube_animation](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedCube_animation.html)
+- [PointLightedCube_perFragment](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedCube_perFragment.html)
+- [PointLightedCube](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedCube.html)
+- [PointLightedSphere_perFragment](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedSphere_perFragment.html)
+- [PointLightedSphere](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedSphere.html)
 
 ### 学习记录
 
@@ -148,3 +161,16 @@
 - 深度冲突 Zfighting.js
 - 立方体 HelloCube.js 重点、难点
 - 指定颜色的立方体 ColoredCube.js 重点、难点
+
+#### 20200924
+
+- 光照原理、类型
+- 反射类型
+- 法线
+- LightedCube.js 平行光
+- LightedCube_animation.js 环境光
+- LightedCube_animation.js 运动物体
+- 魔法矩阵：逆转置矩阵 重点、难点 LightedTranslatedRotatedCube.js
+- 点光源 PointLightedCube.js 属于逐顶点计算
+- 逐片元光照计算 PointLightedCube_perFragment.js
+- 球体的绘制：逐顶点（PointLightedSphere.js）、逐片元（PointLightedSphere_perFragment.js）

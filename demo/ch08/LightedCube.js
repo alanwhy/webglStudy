@@ -1,26 +1,26 @@
 // LightedCube.js (c) 2012 matsuda
 // Vertex shader program
-var VSHADER_SOURCE = 
-  'attribute vec4 a_Position;\n' + 
-  'attribute vec4 a_Color;\n' + 
-  'attribute vec4 a_Normal;\n' +        // Normal
+var VSHADER_SOURCE =
+  'attribute vec4 a_Position;\n' +
+  'attribute vec4 a_Color;\n' +        // 表面基底色
+  'attribute vec4 a_Normal;\n' +       // Normal 法向量 表面法线方向
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform vec3 u_LightColor;\n' +     // Light color
-  'uniform vec3 u_LightDirection;\n' + // Light direction (in the world coordinate, normalized)
+  'uniform vec3 u_LightColor;\n' +     // Light color 光线颜色 入射光颜色
+  'uniform vec3 u_LightDirection;\n' + // Light direction (in the world coordinate, normalized) 入射光方向 归一化的世界坐标 
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position ;\n' +
-  // Make the length of the normal 1.0
+  // Make the length of the normal 1.0 对法向量进行归一化
   '  vec3 normal = normalize(a_Normal.xyz);\n' +
-  // Dot product of the light direction and the orientation of a surface (the normal)
+  // Dot product of the light direction and the orientation of a surface (the normal) 计算光线方向和法向量的点积
   '  float nDotL = max(dot(u_LightDirection, normal), 0.0);\n' +
-  // Calculate the color due to diffuse reflection
+  // Calculate the color due to diffuse reflection 计算漫反射光的颜色
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
   '  v_Color = vec4(diffuse, a_Color.a);\n' +
   '}\n';
 
 // Fragment shader program
-var FSHADER_SOURCE = 
+var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
   '#endif\n' +
@@ -61,21 +61,21 @@ function main() {
   var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
   var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
   var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
-  if (!u_MvpMatrix || !u_LightColor || !u_LightDirection) { 
+  if (!u_MvpMatrix || !u_LightColor || !u_LightDirection) {
     console.log('Failed to get the storage location');
     return;
   }
 
-  // Set the light color (white)
+  // Set the light color (white) 设置光线颜色(白色)
   gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
-  // Set the light direction (in the world coordinate)
+  // Set the light direction (in the world coordinate) 设置光线方向（世界坐标系下的)
   var lightDirection = new Vector3([0.5, 3.0, 4.0]);
-  lightDirection.normalize();     // Normalize
+  lightDirection.normalize();     // Normalize 归一化
   gl.uniform3fv(u_LightDirection, lightDirection.elements);
 
   // Calculate the view projection matrix
   var mvpMatrix = new Matrix4();    // Model view projection matrix
-  mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
+  mvpMatrix.setPerspective(30, canvas.width / canvas.height, 1, 100);
   mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
   // Pass the model view projection matrix to the variable u_MvpMatrix
   gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
@@ -96,44 +96,44 @@ function initVertexBuffers(gl) {
   //  |/      |/
   //  v2------v3
   var vertices = new Float32Array([   // Coordinates
-     1.0, 1.0, 1.0,  -1.0, 1.0, 1.0,  -1.0,-1.0, 1.0,   1.0,-1.0, 1.0, // v0-v1-v2-v3 front
-     1.0, 1.0, 1.0,   1.0,-1.0, 1.0,   1.0,-1.0,-1.0,   1.0, 1.0,-1.0, // v0-v3-v4-v5 right
-     1.0, 1.0, 1.0,   1.0, 1.0,-1.0,  -1.0, 1.0,-1.0,  -1.0, 1.0, 1.0, // v0-v5-v6-v1 up
-    -1.0, 1.0, 1.0,  -1.0, 1.0,-1.0,  -1.0,-1.0,-1.0,  -1.0,-1.0, 1.0, // v1-v6-v7-v2 left
-    -1.0,-1.0,-1.0,   1.0,-1.0,-1.0,   1.0,-1.0, 1.0,  -1.0,-1.0, 1.0, // v7-v4-v3-v2 down
-     1.0,-1.0,-1.0,  -1.0,-1.0,-1.0,  -1.0, 1.0,-1.0,   1.0, 1.0,-1.0  // v4-v7-v6-v5 back
+    1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, // v0-v1-v2-v3 front
+    1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, // v0-v3-v4-v5 right
+    1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, // v0-v5-v6-v1 up
+    -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, // v1-v6-v7-v2 left
+    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, // v7-v4-v3-v2 down
+    1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0  // v4-v7-v6-v5 back
   ]);
 
 
   var colors = new Float32Array([    // Colors
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v1-v2-v3 front
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v3-v4-v5 right
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v5-v6-v1 up
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v1-v6-v7-v2 left
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v7-v4-v3-v2 down
-    1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0　    // v4-v7-v6-v5 back
- ]);
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,     // v0-v1-v2-v3 front
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,     // v0-v3-v4-v5 right
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,     // v0-v5-v6-v1 up
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,     // v1-v6-v7-v2 left
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,     // v7-v4-v3-v2 down
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0　    // v4-v7-v6-v5 back
+  ]);
 
 
-  var normals = new Float32Array([    // Normal
-    0.0, 0.0, 1.0,   0.0, 0.0, 1.0,   0.0, 0.0, 1.0,   0.0, 0.0, 1.0,  // v0-v1-v2-v3 front
-    1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,  // v0-v3-v4-v5 right
-    0.0, 1.0, 0.0,   0.0, 1.0, 0.0,   0.0, 1.0, 0.0,   0.0, 1.0, 0.0,  // v0-v5-v6-v1 up
-   -1.0, 0.0, 0.0,  -1.0, 0.0, 0.0,  -1.0, 0.0, 0.0,  -1.0, 0.0, 0.0,  // v1-v6-v7-v2 left
-    0.0,-1.0, 0.0,   0.0,-1.0, 0.0,   0.0,-1.0, 0.0,   0.0,-1.0, 0.0,  // v7-v4-v3-v2 down
-    0.0, 0.0,-1.0,   0.0, 0.0,-1.0,   0.0, 0.0,-1.0,   0.0, 0.0,-1.0   // v4-v7-v6-v5 back
+  var normals = new Float32Array([    // Normal 法向量
+    0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,  // v0-v1-v2-v3 front
+    1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,  // v0-v3-v4-v5 right
+    0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,  // v0-v5-v6-v1 up
+    -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0,  // v1-v6-v7-v2 left
+    0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0,  // v7-v4-v3-v2 down
+    0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0   // v4-v7-v6-v5 back
   ]);
 
 
   // Indices of the vertices
   var indices = new Uint8Array([
-     0, 1, 2,   0, 2, 3,    // front
-     4, 5, 6,   4, 6, 7,    // right
-     8, 9,10,   8,10,11,    // up
-    12,13,14,  12,14,15,    // left
-    16,17,18,  16,18,19,    // down
-    20,21,22,  20,22,23     // back
- ]);
+    0, 1, 2, 0, 2, 3,    // front
+    4, 5, 6, 4, 6, 7,    // right
+    8, 9, 10, 8, 10, 11,    // up
+    12, 13, 14, 12, 14, 15,    // left
+    16, 17, 18, 16, 18, 19,    // down
+    20, 21, 22, 20, 22, 23     // back
+  ]);
 
 
   // Write the vertex property to buffers (coordinates, colors and normals)
@@ -154,7 +154,7 @@ function initVertexBuffers(gl) {
   return indices.length;
 }
 
-function initArrayBuffer (gl, attribute, data, num, type) {
+function initArrayBuffer(gl, attribute, data, num, type) {
   // Create a buffer object
   var buffer = gl.createBuffer();
   if (!buffer) {

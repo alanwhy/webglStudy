@@ -5,14 +5,14 @@ var VSHADER_SOURCE =
   'attribute vec4 a_Color;\n' +
   'attribute vec4 a_Normal;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform mat4 u_NormalMatrix;\n' +   // Transformation matrix of the normal
+  'uniform mat4 u_NormalMatrix;\n' +   // Transformation matrix of the normal 用来变换法向量的矩阵
   'uniform vec3 u_LightColor;\n' +     // Light color
   'uniform vec3 u_LightDirection;\n' + // Light direction (in the world coordinate, normalized)
   'uniform vec3 u_AmbientLight;\n' +   // Ambient light color
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
-     // Recalculate the normal based on the model matrix and make its length 1.
+     // Recalculate the normal based on the model matrix and make its length 1. 计算变换后的法向量并归一化
   '  vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));\n' +
      // Calculate the dot product of the light direction and the orientation of a surface (the normal)
   '  float nDotL = max(dot(u_LightDirection, normal), 0.0);\n' +
@@ -82,13 +82,13 @@ function main() {
   // Set the ambient light
   gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
 
-  var modelMatrix = new Matrix4();  // Model matrix
+  var modelMatrix = new Matrix4();  // Model matrix 模型矩阵
   var mvpMatrix = new Matrix4();    // Model view projection matrix
-  var normalMatrix = new Matrix4(); // Transformation matrix for normals
+  var normalMatrix = new Matrix4(); // Transformation matrix for normals 用来变换法向量的矩阵
 
-  // Calculate the model matrix
-  modelMatrix.setTranslate(0, 0.9, 0); // Translate to the y-axis direction
-  modelMatrix.rotate(90, 0, 0, 1);     // Rotate 90 degree around the z-axis
+  // Calculate the model matrix 计算模型矩阵
+  modelMatrix.setTranslate(0, 0.9, 0); // Translate to the y-axis direction 沿Y轴平移
+  modelMatrix.rotate(90, 0, 0, 1);     // Rotate 90 degree around the z-axis 沿Z轴旋转
   // Calculate the view projection matrix
   mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
   mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
@@ -96,10 +96,10 @@ function main() {
   // Pass the model view projection matrix to u_MvpMatrix
   gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
 
-  // Calculate the matrix to transform the normal based on the model matrix
+  // Calculate the matrix to transform the normal based on the model matrix 根据模型矩阵计算用来变换法向量的矩阵
   normalMatrix.setInverseOf(modelMatrix);
   normalMatrix.transpose();
-  // Pass the transformation matrix for normals to u_NormalMatrix
+  // Pass the transformation matrix for normals to u_NormalMatrix 将用来变换法向量的矩阵传给u_NormalMatrix变量
   gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
 
   // Clear color and depth buffer

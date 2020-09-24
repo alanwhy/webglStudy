@@ -12,7 +12,7 @@ var VSHADER_SOURCE =
   'varying vec3 v_Position;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
-     // Calculate the vertex position in the world coordinate
+     // Calculate the vertex position in the world coordinate 计算顶点在世界坐标中的位置
   '  v_Position = vec3(u_ModelMatrix * a_Position);\n' +
   '  v_Normal = normalize(vec3(u_NormalMatrix * a_Normal));\n' +
   '  v_Color = a_Color;\n' + 
@@ -23,20 +23,20 @@ var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
   '#endif\n' +
-  'uniform vec3 u_LightColor;\n' +     // Light color
-  'uniform vec3 u_LightPosition;\n' +  // Position of the light source
-  'uniform vec3 u_AmbientLight;\n' +   // Ambient light color
+  'uniform vec3 u_LightColor;\n' +     // Light color 光的颜色
+  'uniform vec3 u_LightPosition;\n' +  // Position of the light source 光源的位置
+  'uniform vec3 u_AmbientLight;\n' +   // Ambient light color 环境光颜色
   'varying vec3 v_Normal;\n' +
   'varying vec3 v_Position;\n' +
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
-     // Normalize the normal because it is interpolated and not 1.0 in length any more
+     // Normalize the normal because it is interpolated and not 1.0 in length any more 对法线进行归一化，因为其内插之后长度不一定是1.0
   '  vec3 normal = normalize(v_Normal);\n' +
-     // Calculate the light direction and make its length 1.
+     // Calculate the light direction and make its length 1. 计算光线方向并归一化
   '  vec3 lightDirection = normalize(u_LightPosition - v_Position);\n' +
-     // The dot product of the light direction and the orientation of a surface (the normal)
+     // The dot product of the light direction and the orientation of a surface (the normal) 计算光线方向和法向量的点积
   '  float nDotL = max(dot(lightDirection, normal), 0.0);\n' +
-     // Calculate the final color from diffuse reflection and ambient reflection
+     // Calculate the final color from diffuse reflection and ambient reflection 计算diffuse, ambient以及最终的颜色
   '  vec3 diffuse = u_LightColor * v_Color.rgb * nDotL;\n' +
   '  vec3 ambient = u_AmbientLight * v_Color.rgb;\n' +
   '  gl_FragColor = vec4(diffuse + ambient, v_Color.a);\n' +
