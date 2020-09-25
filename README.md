@@ -85,6 +85,12 @@
 - [PointLightedSphere_perFragment](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedSphere_perFragment.html)
 - [PointLightedSphere](https://alanwhy.github.io/webglStudy/demo/ch08/PointLightedSphere.html)
 
+#### ch09
+
+- [JointModel](https://alanwhy.github.io/webglStudy/demo/ch09/JointModel.html)
+- [MultiJointModel](https://alanwhy.github.io/webglStudy/demo/ch09/MultiJointModel.html)
+- [MultiJointModel_segment](https://alanwhy.github.io/webglStudy/demo/ch09/MultiJointModel_segment.html)
+
 ### 学习记录
 
 #### 20200917
@@ -174,3 +180,20 @@
 - 点光源 PointLightedCube.js 属于逐顶点计算
 - 逐片元光照计算 PointLightedCube_perFragment.js
 - 球体的绘制：逐顶点（PointLightedSphere.js）、逐片元（PointLightedSphere_perFragment.js）
+
+#### 20200925
+
+- 层次结构模型
+- JointMode.js 单关节
+- MultiJointModel.js 多关节
+- 两种绘制思路：
+  - 以单元（1\*1\*1）的方式通过模型矩阵变换
+  - 直接构建几何体 拼接
+- 着色器对象程序 `initShaders()`
+  - `gl.createShader()`
+  - `gl.shaderSource()`
+  - `gl.compileShader()`
+  - `gl.createProgram()`
+  - `gl.attachShader()`
+  - `gl.linkProgram()`
+  - `gl.useProgram()`

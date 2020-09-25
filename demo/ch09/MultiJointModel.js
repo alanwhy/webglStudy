@@ -73,11 +73,11 @@ function main() {
 　draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); // Draw the robot arm
 }
 
-var ANGLE_STEP = 3.0;     // The increments of rotation angle (degrees)
-var g_arm1Angle = 90.0;   // The rotation angle of arm1 (degrees)
-var g_joint1Angle = 45.0; // The rotation angle of joint1 (degrees)
-var g_joint2Angle = 0.0;  // The rotation angle of joint2 (degrees)
-var g_joint3Angle = 0.0;  // The rotation angle of joint3 (degrees)
+var ANGLE_STEP = 3.0;     // The increments of rotation angle (degrees) 旋转角度的增量（度）
+var g_arm1Angle = 90.0;   // The rotation angle of arm1 (degrees) arm1的旋转角度（度）
+var g_joint1Angle = 45.0; // The rotation angle of joint1 (degrees) 关节1的旋转角度（度）
+var g_joint2Angle = 0.0;  // The rotation angle of joint2 (degrees) 关节2的旋转角度（度）
+var g_joint3Angle = 0.0;  // The rotation angle of joint3 (degrees) 关节3的旋转角度（度）
 
 function keydown(ev, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
   switch (ev.keyCode) {
@@ -107,12 +107,12 @@ function keydown(ev, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
       break;
     default: return; // Skip drawing at no effective action
   }
-  // Draw the robot arm
+  // Draw the robot arm 绘制机械臂
   draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix);
 }
 
 function initVertexBuffers(gl) {
-  // Coordinates（Cube which length of one side is 1 with the origin on the center of the bottom)
+  // Coordinates（Cube which length of one side is 1 with the origin on the center of the bottom) 坐标（边长为1的立方体，其原点在底部的中心），便于后面直接进行拉伸变形
   var vertices = new Float32Array([
     0.5, 1.0, 0.5, -0.5, 1.0, 0.5, -0.5, 0.0, 0.5,  0.5, 0.0, 0.5, // v0-v1-v2-v3 front
     0.5, 1.0, 0.5,  0.5, 0.0, 0.5,  0.5, 0.0,-0.5,  0.5, 1.0,-0.5, // v0-v3-v4-v5 right
@@ -192,30 +192,30 @@ function draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
   // Clear color and depth buffer
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  // Draw a base
+  // Draw a base 绘制基座
   var baseHeight = 2.0;
   g_modelMatrix.setTranslate(0.0, -12.0, 0.0);
   drawBox(gl, n, 10.0, baseHeight, 10.0, viewProjMatrix, u_MvpMatrix, u_NormalMatrix);
  
   // Arm1
   var arm1Length = 10.0;
-  g_modelMatrix.translate(0.0, baseHeight, 0.0);     // Move onto the base
-  g_modelMatrix.rotate(g_arm1Angle, 0.0, 1.0, 0.0);  // Rotate around the y-axis
+  g_modelMatrix.translate(0.0, baseHeight, 0.0);     // Move onto the base 移至基座
+  g_modelMatrix.rotate(g_arm1Angle, 0.0, 1.0, 0.0);  // Rotate around the y-axis 绕y轴旋转 
   drawBox(gl, n, 3.0, arm1Length, 3.0, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); // Draw
 
   // Arm2
   var arm2Length = 10.0;
   g_modelMatrix.translate(0.0, arm1Length, 0.0);       // Move to joint1
-  g_modelMatrix.rotate(g_joint1Angle, 0.0, 0.0, 1.0);  // Rotate around the z-axis
+  g_modelMatrix.rotate(g_joint1Angle, 0.0, 0.0, 1.0);  // Rotate around the z-axis 绕z轴旋转 也可以沿x轴
   drawBox(gl, n, 4.0, arm2Length, 4.0, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); // Draw
 
-  // A palm
+  // A palm 手掌
   var palmLength = 2.0;
   g_modelMatrix.translate(0.0, arm2Length, 0.0);       // Move to palm
   g_modelMatrix.rotate(g_joint2Angle, 0.0, 1.0, 0.0);  // Rotate around the y-axis
   drawBox(gl, n, 2.0, palmLength, 6.0, viewProjMatrix, u_MvpMatrix, u_NormalMatrix);  // Draw
 
-  // Move to the center of the tip of the palm
+  // Move to the center of the tip of the palm 移动到手掌尖端的中心
   g_modelMatrix.translate(0.0, palmLength, 0.0);
 
   // Draw finger1
@@ -231,13 +231,13 @@ function draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
   drawBox(gl, n, 1.0, 2.0, 1.0, viewProjMatrix, u_MvpMatrix, u_NormalMatrix);
 }
 
-var g_matrixStack = []; // Array for storing a matrix
-function pushMatrix(m) { // Store the specified matrix to the array
+var g_matrixStack = []; // Array for storing a matrix 用于存储矩阵的数组 
+function pushMatrix(m) { // Store the specified matrix to the array 将指定的矩阵存储到数组
   var m2 = new Matrix4(m);
   g_matrixStack.push(m2);
 }
 
-function popMatrix() { // Retrieve the matrix from the array
+function popMatrix() { // Retrieve the matrix from the array 从数组中检索矩阵
   return g_matrixStack.pop();
 }
 

@@ -62,20 +62,20 @@ function main() {
     return;
   }
 
-  // Calculate the view projection matrix
+  // Calculate the view projection matrix 计算视图投影矩阵
   var viewProjMatrix = new Matrix4();
   viewProjMatrix.setPerspective(50.0, canvas.width / canvas.height, 1.0, 100.0);
   viewProjMatrix.lookAt(20.0, 10.0, 30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  // Register the event handler to be called when keys are pressed
+  // Register the event handler to be called when keys are pressed 注册按下键时要调用的事件处理程序
   document.onkeydown = function(ev){ keydown(ev, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); };
 
   draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix);  // Draw the robot arm
 }
 
-var ANGLE_STEP = 3.0;    // The increments of rotation angle (degrees)
-var g_arm1Angle = -90.0; // The rotation angle of arm1 (degrees)
-var g_joint1Angle = 0.0; // The rotation angle of joint1 (degrees)
+var ANGLE_STEP = 3.0;    // The increments of rotation angle (degrees) 旋转角度的增量（度）
+var g_arm1Angle = -90.0; // The rotation angle of arm1 (degrees) arm1的当前角度（度）
+var g_joint1Angle = 0.0; // The rotation angle of joint1 (degrees) joint1的当前角度（度）
 
 function keydown(ev, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
   switch (ev.keyCode) {
@@ -98,7 +98,7 @@ function keydown(ev, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
 }
 
 function initVertexBuffers(gl) {
-  // Vertex coordinates（a cuboid 3.0 in width, 10.0 in height, and 3.0 in length with its origin at the center of its bottom)
+  // Vertex coordinates（a cuboid 3.0 in width, 10.0 in height, and 3.0 in length with its origin at the center of its bottom) 顶点坐标（宽为3.0，高为10.0，长为3.0的长方体，其原点位于其底部的中心）
   var vertices = new Float32Array([
     1.5, 10.0, 1.5, -1.5, 10.0, 1.5, -1.5,  0.0, 1.5,  1.5,  0.0, 1.5, // v0-v1-v2-v3 front
     1.5, 10.0, 1.5,  1.5,  0.0, 1.5,  1.5,  0.0,-1.5,  1.5, 10.0,-1.5, // v0-v3-v4-v5 right
@@ -108,7 +108,7 @@ function initVertexBuffers(gl) {
     1.5,  0.0,-1.5, -1.5,  0.0,-1.5, -1.5, 10.0,-1.5,  1.5, 10.0,-1.5  // v4-v7-v6-v5 back
   ]);
 
-  // Normal
+  // Normal 法向量
   var normals = new Float32Array([
     0.0, 0.0, 1.0,  0.0, 0.0, 1.0,  0.0, 0.0, 1.0,  0.0, 0.0, 1.0, // v0-v1-v2-v3 front
     1.0, 0.0, 0.0,  1.0, 0.0, 0.0,  1.0, 0.0, 0.0,  1.0, 0.0, 0.0, // v0-v3-v4-v5 right
@@ -118,7 +118,7 @@ function initVertexBuffers(gl) {
     0.0, 0.0,-1.0,  0.0, 0.0,-1.0,  0.0, 0.0,-1.0,  0.0, 0.0,-1.0  // v4-v7-v6-v5 back
   ]);
 
-  // Indices of the vertices
+  // Indices of the vertices 顶点的索引 
   var indices = new Uint8Array([
      0, 1, 2,   0, 2, 3,    // front
      4, 5, 6,   4, 6, 7,    // right
@@ -171,7 +171,7 @@ function initArrayBuffer(gl, attribute, data, type, num) {
   return true;
 }
 
-// Coordinate transformation matrix
+// Coordinate transformation matrix 坐标转换矩阵
 var g_modelMatrix = new Matrix4(), g_mvpMatrix = new Matrix4();
 
 function draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
@@ -181,25 +181,25 @@ function draw(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
   // Arm1
   var arm1Length = 10.0; // Length of arm1
   g_modelMatrix.setTranslate(0.0, -12.0, 0.0);
-  g_modelMatrix.rotate(g_arm1Angle, 0.0, 1.0, 0.0);    // Rotate around the y-axis
+  g_modelMatrix.rotate(g_arm1Angle, 0.0, 1.0, 0.0);    // Rotate around the y-axis 绕y轴旋转
   drawBox(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); // Draw
 
   // Arm2
-  g_modelMatrix.translate(0.0, arm1Length, 0.0); 　　　// Move to joint1
-  g_modelMatrix.rotate(g_joint1Angle, 0.0, 0.0, 1.0);  // Rotate around the z-axis
-  g_modelMatrix.scale(1.3, 1.0, 1.3); // Make it a little thicker
+  g_modelMatrix.translate(0.0, arm1Length, 0.0); 　　　// Move to joint1 移至joint1 
+  g_modelMatrix.rotate(g_joint1Angle, 0.0, 0.0, 1.0);  // Rotate around the z-axis 绕z轴旋转 
+  g_modelMatrix.scale(1.3, 1.0, 1.3); // Make it a little thicker 使立方体粗一点
   drawBox(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix); // Draw
 }
 
-var g_normalMatrix = new Matrix4(); // Coordinate transformation matrix for normals
+var g_normalMatrix = new Matrix4(); // Coordinate transformation matrix for normals 法线的坐标变换矩阵
 
 // Draw the cube
 function drawBox(gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix) {
-  // Calculate the model view project matrix and pass it to u_MvpMatrix
+  // Calculate the model view project matrix and pass it to u_MvpMatrix 计算模型视图项目矩阵并将其传递给u_MvpMatrix
   g_mvpMatrix.set(viewProjMatrix);
   g_mvpMatrix.multiply(g_modelMatrix);
   gl.uniformMatrix4fv(u_MvpMatrix, false, g_mvpMatrix.elements);
-  // Calculate the normal transformation matrix and pass it to u_NormalMatrix
+  // Calculate the normal transformation matrix and pass it to u_NormalMatrix 计算法线变换矩阵并将其传递给u_NormalMatrix
   g_normalMatrix.setInverseOf(g_modelMatrix);
   g_normalMatrix.transpose();
   gl.uniformMatrix4fv(u_NormalMatrix, false, g_normalMatrix.elements);

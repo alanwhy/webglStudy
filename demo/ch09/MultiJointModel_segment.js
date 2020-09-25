@@ -74,11 +74,11 @@ function main() {
   draw(gl, n, viewProjMatrix, a_Position, u_MvpMatrix, u_NormalMatrix);
 }
 
-var ANGLE_STEP = 3.0;     // The increments of rotation angle (degrees)
-var g_arm1Angle = 90.0;   // The rotation angle of arm1 (degrees)
-var g_joint1Angle = 45.0; // The rotation angle of joint1 (degrees)
-var g_joint2Angle = 0.0;  // The rotation angle of joint2 (degrees)
-var g_joint3Angle = 0.0;  // The rotation angle of joint3 (degrees)
+var ANGLE_STEP = 3.0;     // The increments of rotation angle (degrees)旋转角度的增量（度） 
+var g_arm1Angle = 90.0;   // The rotation angle of arm1 (degrees) arm1的旋转角度（度） 
+var g_joint1Angle = 45.0; // The rotation angle of joint1 (degrees) 关节1的旋转角度（度）
+var g_joint2Angle = 0.0;  // The rotation angle of joint2 (degrees) 关节2的旋转角度（度）
+var g_joint3Angle = 0.0;  // The rotation angle of joint3 (degrees) 关节3的旋转角度（度）
 
 function keydown(ev, gl, o, viewProjMatrix, a_Position, u_MvpMatrix, u_NormalMatrix) {
   switch (ev.keyCode) {
@@ -112,7 +112,7 @@ function keydown(ev, gl, o, viewProjMatrix, a_Position, u_MvpMatrix, u_NormalMat
   draw(gl, o, viewProjMatrix, a_Position, u_MvpMatrix, u_NormalMatrix);
 }
 
-var g_baseBuffer = null;     // Buffer object for a base
+var g_baseBuffer = null;     // Buffer object for a base 基底的缓冲对象 
 var g_arm1Buffer = null;     // Buffer object for arm1
 var g_arm2Buffer = null;     // Buffer object for arm2
 var g_palmBuffer = null;     // Buffer object for a palm
@@ -165,7 +165,7 @@ function initVertexBuffers(gl){
      0.5, 0.0,-0.5, -0.5, 0.0,-0.5, -0.5, 2.0,-0.5,  0.5, 2.0,-0.5  // v4-v7-v6-v5 back
   ]);
 
-  // Normal
+  // Normal 公用法线
   var normals = new Float32Array([
      0.0, 0.0, 1.0,  0.0, 0.0, 1.0,  0.0, 0.0, 1.0,  0.0, 0.0, 1.0, // v0-v1-v2-v3 front
      1.0, 0.0, 0.0,  1.0, 0.0, 0.0,  1.0, 0.0, 0.0,  1.0, 0.0, 0.0, // v0-v3-v4-v5 right
@@ -175,7 +175,7 @@ function initVertexBuffers(gl){
      0.0, 0.0,-1.0,  0.0, 0.0,-1.0,  0.0, 0.0,-1.0,  0.0, 0.0,-1.0  // v4-v7-v6-v5 back
   ]);
 
-  // Indices of the vertices
+  // Indices of the vertices 公用顶点索引
   var indices = new Uint8Array([
      0, 1, 2,   0, 2, 3,    // front
      4, 5, 6,   4, 6, 7,    // right
@@ -185,7 +185,7 @@ function initVertexBuffers(gl){
     20,21,22,  20,22,23     // back
   ]);
 
-  // Write coords to buffers, but don't assign to attribute variables
+  // Write coords to buffers, but don't assign to attribute variables 将坐标写入缓冲区，但不分配给属性变量
   g_baseBuffer = initArrayBufferForLaterUse(gl, vertices_base, 3, gl.FLOAT);
   g_arm1Buffer = initArrayBufferForLaterUse(gl, vertices_arm1, 3, gl.FLOAT);
   g_arm2Buffer = initArrayBufferForLaterUse(gl, vertices_arm2, 3, gl.FLOAT);
@@ -209,7 +209,7 @@ function initVertexBuffers(gl){
 }
 
 function initArrayBufferForLaterUse(gl, data, num, type){
-  var buffer = gl.createBuffer();   // Create a buffer object
+  var buffer = gl.createBuffer();   // Create a buffer object 创建一个缓冲区对象
   if (!buffer) {
     console.log('Failed to create the buffer object');
     return null;
@@ -218,7 +218,7 @@ function initArrayBufferForLaterUse(gl, data, num, type){
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
-  // Store the necessary information to assign the object to the attribute variable later
+  // Store the necessary information to assign the object to the attribute variable later 存储必要的信息，以便以后将对象分配给属性变量
   buffer.num = num;
   buffer.type = type;
 
@@ -226,7 +226,7 @@ function initArrayBufferForLaterUse(gl, data, num, type){
 }
 
 function initArrayBuffer(gl, attribute, data, num, type){
-  var buffer = gl.createBuffer();   // Create a buffer object
+  var buffer = gl.createBuffer();   // Create a buffer object 创建一个缓冲区对象
   if (!buffer) {
     console.log('Failed to create the buffer object');
     return false;
@@ -310,9 +310,9 @@ var g_normalMatrix = new Matrix4();  // Coordinate transformation matrix for nor
 // Draw segments
 function drawSegment(gl, n, buffer, viewProjMatrix, a_Position, u_MvpMatrix, u_NormalMatrix) {
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  // Assign the buffer object to the attribute variable
+  // Assign the buffer object to the attribute variable 将缓冲区对象分配给attribute变量
   gl.vertexAttribPointer(a_Position, buffer.num, buffer.type, false, 0, 0);
-  // Enable the assignment of the buffer object to the attribute variable
+  // Enable the assignment of the buffer object to the attribute variable 开启变量
   gl.enableVertexAttribArray(a_Position);
 
   // Calculate the model view project matrix and pass it to u_MvpMatrix

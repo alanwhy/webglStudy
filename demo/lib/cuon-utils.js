@@ -27,27 +27,27 @@ function initShaders(gl, vshader, fshader) {
  * @return created program object, or null if the creation has failed
  */
 function createProgram(gl, vshader, fshader) {
-  // Create shader object
+  // Create shader object 创建着色器对象 
   var vertexShader = loadShader(gl, gl.VERTEX_SHADER, vshader);
   var fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fshader);
   if (!vertexShader || !fragmentShader) {
     return null;
   }
 
-  // Create a program object
+  // Create a program object 创建一个程序对象 
   var program = gl.createProgram();
   if (!program) {
     return null;
   }
 
-  // Attach the shader objects
+  // Attach the shader objects 附加着色器对象 
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
 
-  // Link the program object
+  // Link the program object 链接程序对象 
   gl.linkProgram(program);
 
-  // Check the result of linking
+  // Check the result of linking 检查链接结果
   var linked = gl.getProgramParameter(program, gl.LINK_STATUS);
   if (!linked) {
     var error = gl.getProgramInfoLog(program);
@@ -68,20 +68,20 @@ function createProgram(gl, vshader, fshader) {
  * @return created shader object, or null if the creation has failed.
  */
 function loadShader(gl, type, source) {
-  // Create shader object
+  // Create shader object 创建着色器对象 
   var shader = gl.createShader(type);
   if (shader == null) {
     console.log('unable to create shader');
     return null;
   }
 
-  // Set the shader program
+  // Set the shader program 设置着色器程序
   gl.shaderSource(shader, source);
 
-  // Compile the shader
+  // Compile the shader 编译着色器
   gl.compileShader(shader);
 
-  // Check the result of compilation
+  // Check the result of compilation 检查编译结果 
   var compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
   if (!compiled) {
     var error = gl.getShaderInfoLog(shader);
