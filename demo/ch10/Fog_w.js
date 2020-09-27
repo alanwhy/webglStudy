@@ -9,7 +9,7 @@ var VSHADER_SOURCE =
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
   '  v_Color = a_Color;\n' +
-     // Use the negative z value of each vertex in view coordinate system
+     // Use the negative z value of each vertex in view coordinate system 在视图坐标系中使用每个顶点的负z值
   '  v_Dist = gl_Position.w;\n' +
   '}\n';
 

@@ -11,8 +11,8 @@ var VSHADER_SOURCE =
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
-  '#endif GL_ES\n' +
-  'void main() {\n' +    // Center coordinate is (0.5, 0.5)
+  '#endif\n' +
+  'void main() {\n' +    // Center coordinate is (0.5, 0.5) 中心坐标为（0.5，0.5）
   '  float d = distance(gl_PointCoord, vec2(0.5, 0.5));\n' +
   '  if(d < 0.5) {\n' +  // Radius is 0.5
   '    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +

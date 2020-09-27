@@ -11,7 +11,7 @@ var VSHADER_SOURCE =
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
   '  v_Color = a_Color;\n' +
-     // Calculate the distance to each vertex from eye point
+     // Calculate the distance to each vertex from eye point 减少雾的最大距离
   '  v_Dist = distance(u_ModelMatrix * a_Position, u_Eye);\n' +
   '}\n';
 
@@ -20,12 +20,12 @@ var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
   '#endif\n' +
-  'uniform vec3 u_FogColor;\n' + // Color of Fog
-  'uniform vec2 u_FogDist;\n' +  // Distance of Fog (starting point, end point)
+  'uniform vec3 u_FogColor;\n' + // Color of Fog 雾的颜色 
+  'uniform vec2 u_FogDist;\n' +  // Distance of Fog (starting point, end point) 雾的距离（起点，终点） 
   'varying vec4 v_Color;\n' +
   'varying float v_Dist;\n' +
   'void main() {\n' +
-     // Calculation of fog factor (factor becomes smaller as it goes further away from eye point)
+     // Calculation of fog factor (factor becomes smaller as it goes further away from eye point) 雾化系数的计算（距离雾点越远，雾化系数就越小）
   '  float fogFactor = clamp((u_FogDist.y - v_Dist) / (u_FogDist.y - u_FogDist.x), 0.0, 1.0);\n' +
      // Stronger fog as it gets further: u_FogColor * (1 - fogFactor) + v_Color * fogFactor
   '  vec3 color = mix(u_FogColor, vec3(v_Color), fogFactor);\n' +
@@ -56,11 +56,11 @@ function main() {
     return;
   }
 
-  // Color of Fog
+  // Color of Fog 雾的颜色
   var fogColor = new Float32Array([0.137, 0.231, 0.423]);
-  // Distance of fog [where fog starts, where fog completely covers object]
+  // Distance of fog [where fog starts, where fog completely covers object] 雾的距离[雾开始的地方，雾完全覆盖对象的距离] 
   var fogDist = new Float32Array([55, 80]);
-  // Position of eye point (world coordinates)
+  // Position of eye point (world coordinates) 视点位置（世界坐标）
   var eye = new Float32Array([25, 65, 35, 1.0]);
 
   // Get the storage locations of uniform variables
@@ -74,12 +74,12 @@ function main() {
     return;
   }
 	
-  // Pass fog color, distances, and eye point to uniform variable
+  // Pass fog color, distances, and eye point to uniform variable 将雾的颜色，距离和视点传递给统一变量
   gl.uniform3fv(u_FogColor, fogColor); // Colors
   gl.uniform2fv(u_FogDist, fogDist);   // Starting point and end point
   gl.uniform4fv(u_Eye, eye);           // Eye point
 
-  // Set clear color and enable hidden surface removal
+  // Set clear color and enable hidden surface removal 设置背景色、启用隐藏的表面去除
   gl.clearColor(fogColor[0], fogColor[1], fogColor[2], 1.0); // Color of Fog
   gl.enable(gl.DEPTH_TEST);
 
@@ -112,10 +112,10 @@ function main() {
 
 function keydown(ev, gl, n, u_FogDist, fogDist) {
   switch (ev.keyCode) {
-    case 38: // Up arrow key -> Increase the maximum distance of fog
+    case 38: // Up arrow key -> Increase the maximum distance of fog 增加雾的最大距离
       fogDist[1]  += 1;
       break;
-    case 40: // Down arrow key -> Decrease the maximum distance of fog
+    case 40: // Down arrow key -> Decrease the maximum distance of fog 减少雾的最大距离
       if (fogDist[1] > fogDist[0]) fogDist[1] -= 1;
       break;
     default: return;

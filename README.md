@@ -91,6 +91,27 @@
 - [MultiJointModel](https://alanwhy.github.io/webglStudy/demo/ch09/MultiJointModel.html)
 - [MultiJointModel_segment](https://alanwhy.github.io/webglStudy/demo/ch09/MultiJointModel_segment.html)
 
+#### ch10
+
+- [3DoverWeb](https://alanwhy.github.io/webglStudy/demo/ch10/3DoverWeb.html)
+- [BlendedCube](https://alanwhy.github.io/webglStudy/demo/ch10/BlendedCube.html)
+- [Fog_w](https://alanwhy.github.io/webglStudy/demo/ch10/Fog_w.html)
+- [Fog](https://alanwhy.github.io/webglStudy/demo/ch10/Fog.html)
+- [FramebufferObject](https://alanwhy.github.io/webglStudy/demo/ch10/FramebufferObject.html)
+- [HUD](https://alanwhy.github.io/webglStudy/demo/ch10/HUD.html)
+- [LookAtBlendedTriangles](https://alanwhy.github.io/webglStudy/demo/ch10/LookAtBlendedTriangles.html)
+- [OBJViewer](https://alanwhy.github.io/webglStudy/demo/ch10/OBJViewer.html)
+- [PickFace](https://alanwhy.github.io/webglStudy/demo/ch10/PickFace.html)
+- [Picking](https://alanwhy.github.io/webglStudy/demo/ch10/Picking.html)
+- [PickObject](https://alanwhy.github.io/webglStudy/demo/ch10/PickObject.html)
+- [ProgramObject](https://alanwhy.github.io/webglStudy/demo/ch10/ProgramObject.html)
+- [RotateObject](https://alanwhy.github.io/webglStudy/demo/ch10/RotateObject.html)
+- [RotatingTriangle_contextLost](https://alanwhy.github.io/webglStudy/demo/ch10/RotatingTriangle_contextLost.html)
+- [RoundedPoints](https://alanwhy.github.io/webglStudy/demo/ch10/RoundedPoints.html)
+- [Shadow_highp_sphere](https://alanwhy.github.io/webglStudy/demo/ch10/Shadow_highp_sphere.html)
+- [Shadow_highp](https://alanwhy.github.io/webglStudy/demo/ch10/Shadow_highp.html)
+- [Shadow](https://alanwhy.github.io/webglStudy/demo/ch10/Shadow.html)
+
 ### 学习记录
 
 #### 20200917
@@ -197,3 +218,25 @@
   - `gl.attachShader()`
   - `gl.linkProgram()`
   - `gl.useProgram()`
+
+#### 20200927
+
+- 鼠标控制 RotateObject.js
+- 选中物体 PickObject.js
+- 选中表面 PickFace.js
+- HUD
+- 网页显示 3DoverWeb.js
+- 雾化 Fog.js Fog_w.js
+- 绘制圆形点 RoundedPoints.js
+- α 混合 LookAtBlendedTriangles.js
+- 混合函数 半透明的三维物体 BlendedCube.js
+- 切换着色器 ProgramObject.js
+- 渲染到纹理
+  - 帧缓冲区（FBO）
+  - FramebufferObject.js
+  - `gl.createFramebuffer()` 创建 FBO 对象
+  - `gl.createRenderbuffer()` 创建渲染 FBO 对象
+  - `gl.bindRenderbuffer()` `gl.renderbufferStorage()` 绑定渲染缓冲区并设置尺寸
+  - `gl.bindFramebuffer` `gl.framebufferTexture2D()` 将纹理对象关联到 FBO 对象
+  - `gl.framebufferRenderbuffer()` 将渲染缓冲区对象关联到帧缓冲区对象
+  - `gl.checkFramebufferStatus()` 检查帧缓冲区的配置

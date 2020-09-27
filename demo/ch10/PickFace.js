@@ -3,15 +3,15 @@
 var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
-  'attribute float a_Face;\n' +   // Surface number (Cannot use int for attribute variable)
+  'attribute float a_Face;\n' +   // Surface number (Cannot use int for attribute variable) 表面编号（不能将int用作属性变量）
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform int u_PickedFace;\n' + // Surface number of selected face
+  'uniform int u_PickedFace;\n' + // Surface number of selected face 所选面的表面编号 
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
-  '  int face = int(a_Face);\n' + // Convert to int
+  '  int face = int(a_Face);\n' + // Convert to int 转换为int
   '  vec3 color = (face == u_PickedFace) ? vec3(1.0) : a_Color.rgb;\n' +
-  '  if(u_PickedFace == 0) {\n' + // In case of 0, insert the face number into alpha
+  '  if(u_PickedFace == 0) {\n' + // In case of 0, insert the face number into alpha 如果为0，则将面部编号插入alpha
   '    v_Color = vec4(color, a_Face/255.0);\n' +
   '  } else {\n' +
   '    v_Color = vec4(color, a_Color.a);\n' +
@@ -71,7 +71,7 @@ function main() {
   viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
   viewProjMatrix.lookAt(0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  // Initialize selected surface
+  // Initialize selected surface 初始化选定的曲面
   gl.uniform1i(u_PickedFace, -1);
 
   var currentAngle = 0.0; // Current rotation angle
@@ -80,10 +80,10 @@ function main() {
     var x = ev.clientX, y = ev.clientY;
     var rect = ev.target.getBoundingClientRect();
     if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
-      // If Clicked position is inside the <canvas>, update the selected surface
+      // If Clicked position is inside the <canvas>, update the selected surface 如果点击位置在<canvas>内，则更新选定的曲面
       var x_in_canvas = x - rect.left, y_in_canvas = rect.bottom - y;
       var face = checkFace(gl, n, x_in_canvas, y_in_canvas, currentAngle, u_PickedFace, viewProjMatrix, u_MvpMatrix);
-      gl.uniform1i(u_PickedFace, face); // Pass the surface number to u_PickedFace
+      gl.uniform1i(u_PickedFace, face); // Pass the surface number to u_PickedFace 将表面编号传递给u_PickedFace
       draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix);
     }
   }
@@ -91,7 +91,7 @@ function main() {
   var tick = function() {   // Start drawing
     currentAngle = animate(currentAngle);
     draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix);
-    requestAnimationFrame(tick, canvas);
+    requestAnimationFrame(tick);
   };
   tick();
 }
@@ -124,7 +124,7 @@ function initVertexBuffers(gl) {
     0.73, 0.82, 0.93,  0.73, 0.82, 0.93,  0.73, 0.82, 0.93,  0.73, 0.82, 0.93, // v4-v7-v6-v5 back
    ]);
 
-  var faces = new Uint8Array([   // Faces
+  var faces = new Uint8Array([   // Faces 表面编号
     1, 1, 1, 1,     // v0-v1-v2-v3 front
     2, 2, 2, 2,     // v0-v3-v4-v5 right
     3, 3, 3, 3,     // v0-v5-v6-v1 up
@@ -165,9 +165,9 @@ function initVertexBuffers(gl) {
 
 function checkFace(gl, n, x, y, currentAngle, u_PickedFace, viewProjMatrix, u_MvpMatrix) {
   var pixels = new Uint8Array(4); // Array for storing the pixel value
-  gl.uniform1i(u_PickedFace, 0);  // Draw by writing surface number into alpha value
+  gl.uniform1i(u_PickedFace, 0);  // Draw by writing surface number into alpha value 通过将表面编号写入alpha值进行绘制
   draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix);
-  // Read the pixel value of the clicked position. pixels[3] is the surface number
+  // Read the pixel value of the clicked position. pixels[3] is the surface number 读取点击位置的像素值。 pixels [3]是表面编号
   gl.readPixels(x, y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
 
   return pixels[3];

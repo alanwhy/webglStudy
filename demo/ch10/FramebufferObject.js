@@ -21,7 +21,7 @@ var FSHADER_SOURCE =
   '  gl_FragColor = texture2D(u_Sampler, v_TexCoord);\n' +
   '}\n';
 
-// Size of off screen
+// Size of off screen 离屏绘制的尺寸
 var OFFSCREEN_WIDTH = 256;
 var OFFSCREEN_HEIGHT = 256;
 
@@ -67,7 +67,7 @@ function main() {
     return;
   }
 
-  // Initialize framebuffer object (FBO)
+  // Initialize framebuffer object (FBO) 初始化帧缓冲对象（FBO）
   var fbo = initFramebufferObject(gl);
   if (!fbo) {
     console.log('Failed to intialize the framebuffer object (FBO)');
@@ -81,7 +81,7 @@ function main() {
   viewProjMatrix.setPerspective(30, canvas.width/canvas.height, 1.0, 100.0);
   viewProjMatrix.lookAt(0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  var viewProjMatrixFBO = new Matrix4();   // Prepare view projection matrix for FBO
+  var viewProjMatrixFBO = new Matrix4();   // Prepare view projection matrix for FBO 为帧缓冲对象准备 
   viewProjMatrixFBO.setPerspective(30.0, OFFSCREEN_WIDTH/OFFSCREEN_HEIGHT, 1.0, 100.0);
   viewProjMatrixFBO.lookAt(0.0, 2.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
@@ -271,7 +271,7 @@ function initFramebufferObject(gl) {
     return null;
   }
 
-  // Create a frame buffer object (FBO)
+  // Create a frame buffer object (FBO) 创建一个帧缓冲对象（FBO）
   framebuffer = gl.createFramebuffer();
   if (!framebuffer) {
     console.log('Failed to create frame buffer object');
@@ -303,7 +303,7 @@ function initFramebufferObject(gl) {
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
   gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
 
-  // Check if FBO is configured correctly
+  // Check if FBO is configured correctly 检查FBO配置是否正确
   var e = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
   if (gl.FRAMEBUFFER_COMPLETE !== e) {
     console.log('Frame buffer object is incomplete: ' + e.toString());

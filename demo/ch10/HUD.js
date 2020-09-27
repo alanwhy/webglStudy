@@ -39,7 +39,7 @@ function main() {
 
   // Get the rendering context for WebGL
   var gl = getWebGLContext(canvas);
-  // Get the rendering context for 2DCG
+  // Get the rendering context for 2DCG 获取2DCG的渲染上下文 
   var ctx = hud.getContext('2d');
   if (!gl || !ctx) {
     console.log('Failed to get rendering context');
@@ -92,7 +92,7 @@ function main() {
 
   var tick = function() {   // Start drawing
     currentAngle = animate(currentAngle);
-    draw2D(ctx, currentAngle); // Draw 2D
+    draw2D(ctx, currentAngle); // Draw 2D 绘制2D 
     draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix);
     requestAnimationFrame(tick, canvas);
   };
@@ -182,16 +182,16 @@ function draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix) {
 }
 
 function draw2D(ctx, currentAngle) {
-  ctx.clearRect(0, 0, 400, 400); // Clear <hud>
-  // Draw triangle with white lines
+  ctx.clearRect(0, 0, 400, 400); // Clear <hud> 清除<hud>
+  // Draw triangle with white lines 用白线画三角形 
   ctx.beginPath();                      // Start drawing
   ctx.moveTo(120, 10); ctx.lineTo(200, 150); ctx.lineTo(40, 150);
   ctx.closePath();
-  ctx.strokeStyle = 'rgba(255, 255, 255, 1)'; // Set white to color of lines
-  ctx.stroke();                           // Draw Triangle with white lines
-  // Draw white letters
+  ctx.strokeStyle = 'rgba(255, 255, 255, 1)'; // Set white to color of lines 将白色设置为线条颜色 
+  ctx.stroke();                           // Draw Triangle with white lines 用白线画三角形
+  // Draw white letters 画白色字母 
   ctx.font = '18px "Times New Roman"';
-  ctx.fillStyle = 'rgba(255, 255, 255, 1)'; // Set white to the color of letters
+  ctx.fillStyle = 'rgba(255, 255, 255, 1)'; // Set white to the color of letters 将白色设置为字母的颜色
   ctx.fillText('HUD: Head Up Display', 40, 180); 
   ctx.fillText('Triangle is drawn by Canvas 2D API.', 40, 200); 
   ctx.fillText('Cube is drawn by WebGL API.', 40, 220); 

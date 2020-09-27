@@ -46,11 +46,15 @@ function main() {
 
   // Set the clear color and enable the depth test
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.enable(gl.DEPTH_TEST);
-  // Enable alpha blending
+  gl.enable(gl.DEPTH_TEST); // 启用深度测试 page 372
+  // 锁定用于进行隐藏面消除的深度缓冲区（第7章）的写入操作，使之只读。
+  // gl.depthMask(false)
+  // Enable alpha blending 启用Alpha混合 
   gl.enable (gl.BLEND);
-  // Set blending function
+  // Set blending function 设置混合功能 
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  // 释放深度缓冲区，使之可读可写。
+  // gl.depthMask(true)
 
   // Get the storage location of u_MvpMatrix
   var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');

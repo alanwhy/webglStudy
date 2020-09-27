@@ -48,9 +48,9 @@ function main() {
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0, 0, 0, 1);
-  // Enable alpha blending
+  // Enable alpha blending 启用Alpha混合
   gl.enable (gl.BLEND);
-  // Set blending function
+  // Set blending function 设置混合功能 
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
   // get the storage locations of u_ViewMatrix and u_ProjMatrix

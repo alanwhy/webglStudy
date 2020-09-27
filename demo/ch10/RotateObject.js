@@ -61,8 +61,8 @@ function main() {
   viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
   viewProjMatrix.lookAt(3.0, 3.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  // Register the event handler
-  var currentAngle = [0.0, 0.0]; // Current rotation angle ([x-axis, y-axis] degrees)
+  // Register the event handler 注册事件处理程序 
+  var currentAngle = [0.0, 0.0]; // Current rotation angle ([x-axis, y-axis] degrees) [绕X轴旋转角度，绕Y轴旋转角度]
   initEventHandlers(canvas, currentAngle);
 
   // Set texture
@@ -73,7 +73,7 @@ function main() {
 
   var tick = function() {   // Start drawing
     draw(gl, n, viewProjMatrix, u_MvpMatrix, currentAngle);
-    requestAnimationFrame(tick, canvas);
+    requestAnimationFrame(tick);
   };
   tick();
 }
@@ -136,12 +136,12 @@ function initVertexBuffers(gl) {
 }
 
 function initEventHandlers(canvas, currentAngle) {
-  var dragging = false;         // Dragging or not
-  var lastX = -1, lastY = -1;   // Last position of the mouse
+  var dragging = false;         // Dragging or not 是否拖动 
+  var lastX = -1, lastY = -1;   // Last position of the mouse 鼠标的最后位置 
 
-  canvas.onmousedown = function(ev) {   // Mouse is pressed
+  canvas.onmousedown = function(ev) {   // Mouse is pressed 按下鼠标 
     var x = ev.clientX, y = ev.clientY;
-    // Start dragging if a moue is in <canvas>
+    // Start dragging if a mouse is in <canvas> 如果鼠标在<canvas>中，则开始拖动
     var rect = ev.target.getBoundingClientRect();
     if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
       lastX = x; lastY = y;
@@ -149,15 +149,15 @@ function initEventHandlers(canvas, currentAngle) {
     }
   };
 
-  canvas.onmouseup = function(ev) { dragging = false;  }; // Mouse is released
+  canvas.onmouseup = function(ev) { dragging = false;  }; // Mouse is released 释放鼠标
 
-  canvas.onmousemove = function(ev) { // Mouse is moved
+  canvas.onmousemove = function(ev) { // Mouse is moved 鼠标移动 
     var x = ev.clientX, y = ev.clientY;
     if (dragging) {
-      var factor = 100/canvas.height; // The rotation ratio
+      var factor = 100/canvas.height; // The rotation ratio 旋转因子
       var dx = factor * (x - lastX);
       var dy = factor * (y - lastY);
-      // Limit x-axis rotation angle to -90 to 90 degrees
+      // Limit x-axis rotation angle to -90 to 90 degrees 将x轴旋转角度限制为-90至90度
       currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
       currentAngle[1] = currentAngle[1] + dx;
     }
@@ -165,12 +165,12 @@ function initEventHandlers(canvas, currentAngle) {
   };
 }
 
-var g_MvpMatrix = new Matrix4(); // Model view projection matrix
+var g_MvpMatrix = new Matrix4(); // Model view projection matrix 模型视图投影矩阵 
 function draw(gl, n, viewProjMatrix, u_MvpMatrix, currentAngle) {
-  // Caliculate The model view projection matrix and pass it to u_MvpMatrix
+  // Caliculate The model view projection matrix and pass it to u_MvpMatrix 计算模型视图投影矩阵并将其传递给u_MvpMatrix
   g_MvpMatrix.set(viewProjMatrix);
-  g_MvpMatrix.rotate(currentAngle[0], 1.0, 0.0, 0.0); // Rotation around x-axis
-  g_MvpMatrix.rotate(currentAngle[1], 0.0, 1.0, 0.0); // Rotation around y-axis
+  g_MvpMatrix.rotate(currentAngle[0], 1.0, 0.0, 0.0); // Rotation around x-axis 绕x轴旋转
+  g_MvpMatrix.rotate(currentAngle[1], 0.0, 1.0, 0.0); // Rotation around y-axis 绕y轴旋转 
   gl.uniformMatrix4fv(u_MvpMatrix, false, g_MvpMatrix.elements);
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);     // Clear buffers

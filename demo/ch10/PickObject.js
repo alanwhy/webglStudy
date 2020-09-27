@@ -4,11 +4,11 @@ var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform bool u_Clicked;\n' + // Mouse is pressed
+  'uniform bool u_Clicked;\n' + // Mouse is pressed 按下鼠标 
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
-  '  if (u_Clicked) {\n' + //  Draw in red if mouse is pressed
+  '  if (u_Clicked) {\n' + //  Draw in red if mouse is pressed 如果按下鼠标以红色绘制 
   '    v_Color = vec4(1.0, 0.0, 0.0, 1.0);\n' +
   '  } else {\n' +
   '    v_Color = a_Color;\n' +
@@ -68,15 +68,15 @@ function main() {
   viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
   viewProjMatrix.lookAt(0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-  gl.uniform1i(u_Clicked, 0); // Pass false to u_Clicked
+  gl.uniform1i(u_Clicked, 0); // Pass false to u_Clicked 将false传递给u_Clicked 
 
   var currentAngle = 0.0; // Current rotation angle
   // Register the event handler
-  canvas.onmousedown = function(ev) {   // Mouse is pressed
+  canvas.onmousedown = function(ev) {   // Mouse is pressed 按下鼠标
     var x = ev.clientX, y = ev.clientY;
     var rect = ev.target.getBoundingClientRect();
     if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
-      // If pressed position is inside <canvas>, check if it is above object
+      // If pressed position is inside <canvas>, check if it is above object 如果按下的位置在<canvas>内部，请检查其是否在对象上方
       var x_in_canvas = x - rect.left, y_in_canvas = rect.bottom - y;
       var picked = check(gl, n, x_in_canvas, y_in_canvas, currentAngle, u_Clicked, viewProjMatrix, u_MvpMatrix);
       if (picked) alert('The cube was selected! ');
@@ -147,15 +147,15 @@ function initVertexBuffers(gl) {
 function check(gl, n, x, y, currentAngle, u_Clicked, viewProjMatrix, u_MvpMatrix) {
   var picked = false;
   gl.uniform1i(u_Clicked, 1);  // Pass true to u_Clicked
-  draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix); // Draw cube with red
-  // Read pixel at the clicked position
-  var pixels = new Uint8Array(4); // Array for storing the pixel value
+  draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix); // Draw cube with red 用红色绘制立方体
+  // Read pixel at the clicked position 读取点击位置的像素
+  var pixels = new Uint8Array(4); // Array for storing the pixel value 用于存储像素值的数组
   gl.readPixels(x, y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
 
-  if (pixels[0] == 255) // The mouse in on cube if R(pixels[0]) is 255
+  if (pixels[0] == 255) // The mouse in on cube if R(pixels[0]) is 255 如果R（pixels [0]）为255，则说明鼠标在立方体上
     picked = true;
 
-  gl.uniform1i(u_Clicked, 0);  // Pass false to u_Clicked(rewrite the cube)
+  gl.uniform1i(u_Clicked, 0);  // Pass false to u_Clicked(rewrite the cube) 重绘正常状态的立方体
   draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix); // Draw the cube
   
   return picked;
@@ -165,7 +165,7 @@ var g_MvpMatrix = new Matrix4(); // Model view projection matrix
 function draw(gl, n, currentAngle, viewProjMatrix, u_MvpMatrix) {
   // Caliculate The model view projection matrix and pass it to u_MvpMatrix
   g_MvpMatrix.set(viewProjMatrix);
-  g_MvpMatrix.rotate(currentAngle, 1.0, 0.0, 0.0); // Rotate appropriately
+  g_MvpMatrix.rotate(currentAngle, 1.0, 0.0, 0.0); // Rotate appropriately 适当旋转
   g_MvpMatrix.rotate(currentAngle, 0.0, 1.0, 0.0);
   g_MvpMatrix.rotate(currentAngle, 0.0, 0.0, 1.0);
   gl.uniformMatrix4fv(u_MvpMatrix, false, g_MvpMatrix.elements);
