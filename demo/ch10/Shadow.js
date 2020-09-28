@@ -1,5 +1,5 @@
 // Shadow.js (c) 2012 matsuda and tanaka
-// Vertex shader program for generating a shadow map
+// Vertex shader program for generating a shadow map 用于生成阴影贴图的顶点着色器程序 
 var SHADOW_VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
@@ -7,7 +7,7 @@ var SHADOW_VSHADER_SOURCE =
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
   '}\n';
 
-// Fragment shader program for generating a shadow map
+// Fragment shader program for generating a shadow map 用于生成阴影贴图的片段着色器程序
 var SHADOW_FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -21,7 +21,7 @@ var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
-  'uniform mat4 u_MvpMatrixFromLight;\n' +
+  'uniform mat4 u_MvpMatrixFromLight;\n' + // 位于光源处时的模型视图投影矩阵
   'varying vec4 v_PositionFromLight;\n' +
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
@@ -41,13 +41,13 @@ var FSHADER_SOURCE =
   'void main() {\n' +
   '  vec3 shadowCoord = (v_PositionFromLight.xyz/v_PositionFromLight.w)/2.0 + 0.5;\n' +
   '  vec4 rgbaDepth = texture2D(u_ShadowMap, shadowCoord.xy);\n' +
-  '  float depth = rgbaDepth.r;\n' + // Retrieve the z-value from R
+  '  float depth = rgbaDepth.r;\n' + // Retrieve the z-value from R 从R分量中获取z值
   '  float visibility = (shadowCoord.z > depth + 0.005) ? 0.7 : 1.0;\n' +
   '  gl_FragColor = vec4(v_Color.rgb * visibility, v_Color.a);\n' +
   '}\n';
 
 var OFFSCREEN_WIDTH = 2048, OFFSCREEN_HEIGHT = 2048;
-var LIGHT_X = 0, LIGHT_Y = 7, LIGHT_Z = 2; // Position of the light source
+var LIGHT_X = 0, LIGHT_Y = 7, LIGHT_Z = 2; // Position of the light source 光源的位置 
 
 function main() {
   // Retrieve <canvas> element
@@ -60,7 +60,7 @@ function main() {
     return;
   }
 
-  // Initialize shaders for generating a shadow map
+  // Initialize shaders for generating a shadow map 初始化着色器以生成阴影贴图
   var shadowProgram = createProgram(gl, SHADOW_VSHADER_SOURCE, SHADOW_FSHADER_SOURCE);
   shadowProgram.a_Position = gl.getAttribLocation(shadowProgram, 'a_Position');
   shadowProgram.u_MvpMatrix = gl.getUniformLocation(shadowProgram, 'u_MvpMatrix');
@@ -69,7 +69,7 @@ function main() {
     return;
   }
 
-  // Initialize shaders for regular drawing
+  // Initialize shaders for regular drawing 初始化着色器以进行常规绘制
   var normalProgram = createProgram(gl, VSHADER_SOURCE, FSHADER_SOURCE);
   normalProgram.a_Position = gl.getAttribLocation(normalProgram, 'a_Position');
   normalProgram.a_Color = gl.getAttribLocation(normalProgram, 'a_Color');
@@ -112,8 +112,8 @@ function main() {
   viewProjMatrix.lookAt(0.0, 7.0, 9.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   var currentAngle = 0.0; // Current rotation angle (degrees)
-  var mvpMatrixFromLight_t = new Matrix4(); // A model view projection matrix from light source (for triangle)
-  var mvpMatrixFromLight_p = new Matrix4(); // A model view projection matrix from light source (for plane)
+  var mvpMatrixFromLight_t = new Matrix4(); // A model view projection matrix from light source (for triangle) 来自光源的模型视图投影矩阵（用于三角形）
+  var mvpMatrixFromLight_p = new Matrix4(); // A model view projection matrix from light source (for plane) 来自光源的模型视图投影矩阵（用于平面）
   var tick = function() {
     currentAngle = animate(currentAngle);
 

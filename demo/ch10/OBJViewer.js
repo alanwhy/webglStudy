@@ -56,7 +56,7 @@ function main() {
 
   if (program.a_Position < 0 ||  program.a_Normal < 0 || program.a_Color < 0 ||
       !program.u_MvpMatrix || !program.u_NormalMatrix) {
-    console.log('attribute, uniform変数の格納場所の取得に失敗'); 
+    console.log('attribute, uniform无法获取属性和统一变量的存储位置'); 
     return;
   }
 
@@ -67,7 +67,7 @@ function main() {
     return;
   }
 
-  // ビュー投影行列を計算
+  // ビュー投影行列を計算 计算视图投影矩阵
   var viewProjMatrix = new Matrix4();
   viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
   viewProjMatrix.lookAt(0.0, 500.0, 200.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);

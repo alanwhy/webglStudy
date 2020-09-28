@@ -240,3 +240,12 @@
   - `gl.bindFramebuffer` `gl.framebufferTexture2D()` 将纹理对象关联到 FBO 对象
   - `gl.framebufferRenderbuffer()` 将渲染缓冲区对象关联到帧缓冲区对象
   - `gl.checkFramebufferStatus()` 检查帧缓冲区的配置
+
+#### 20200928
+
+- 如何实现阴影 Shadow.js
+- 提升阴影程序的精度 Shadow_highp.js
+- 加载三维模型 \*.obj
+  - \*.obj 文件格式
+  - \*.mtl 文件格式
+- 响应上下文丢失 RotatingTriangle_contextLost.js

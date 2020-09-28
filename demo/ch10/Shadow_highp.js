@@ -15,8 +15,8 @@ var SHADOW_FSHADER_SOURCE =
   'void main() {\n' +
   '  const vec4 bitShift = vec4(1.0, 256.0, 256.0 * 256.0, 256.0 * 256.0 * 256.0);\n' +
   '  const vec4 bitMask = vec4(1.0/256.0, 1.0/256.0, 1.0/256.0, 0.0);\n' +
-  '  vec4 rgbaDepth = fract(gl_FragCoord.z * bitShift);\n' + // Calculate the value stored into each byte
-  '  rgbaDepth -= rgbaDepth.gbaa * bitMask;\n' + // Cut off the value which do not fit in 8 bits
+  '  vec4 rgbaDepth = fract(gl_FragCoord.z * bitShift);\n' + // Calculate the value stored into each byte 计算存储在每个字节中的值
+  '  rgbaDepth -= rgbaDepth.gbaa * bitMask;\n' + // Cut off the value which do not fit in 8 bits 截断不适合8位的值
   '  gl_FragColor = rgbaDepth;\n' +
   '}\n';
 
@@ -42,7 +42,7 @@ var FSHADER_SOURCE =
   'uniform sampler2D u_ShadowMap;\n' +
   'varying vec4 v_PositionFromLight;\n' +
   'varying vec4 v_Color;\n' +
-  // Recalculate the z value from the rgba
+  // Recalculate the z value from the rgba 从rgba重新计算z值
   'float unpackDepth(const in vec4 rgbaDepth) {\n' +
   '  const vec4 bitShift = vec4(1.0, 1.0/256.0, 1.0/(256.0*256.0), 1.0/(256.0*256.0*256.0));\n' +
   '  float depth = dot(rgbaDepth, bitShift);\n' + // Use dot() since the calculations is same

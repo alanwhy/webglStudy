@@ -17,7 +17,7 @@ function main() {
   // Retrieve <canvas> element
   var canvas = document.getElementById('webgl');
 
-  // Register event handler for context lost and context restored events
+  // Register event handler for context lost and context restored events 为上下文丢失和上下文恢复的事件注册事件处理程序
   canvas.addEventListener('webglcontextlost', contextLost, false);
   canvas.addEventListener('webglcontextrestored', function(ev) { start(canvas); }, false);
 
@@ -69,9 +69,9 @@ function start(canvas) {
   tick();
 }
 
-function contextLost(ev) { // Event Handler for context lost event
-  cancelAnimationFrame(g_requestID); //  Stop animation
-  ev.preventDefault();  // Prevent the default behavior
+function contextLost(ev) { // Event Handler for context lost event 上下文丢失事件的事件处理程序
+  cancelAnimationFrame(g_requestID); //  Stop animation 停止动画
+  ev.preventDefault();  // Prevent the default behavior 防止默认行为
 }
 
 function initVertexBuffers(gl) {
