@@ -14,7 +14,7 @@ function main() {
     console.log('Failed to get the rendering context for WebGL');
     return;
   }
-  // Read shader from file
+  // Read shader from file 从文件中读取着色器
   readShaderFile(gl, 'ColoredTriangle.vert', 'v');
   readShaderFile(gl, 'ColoredTriangle.frag', 'f');
 }
@@ -84,7 +84,7 @@ function initVertexBuffers(gl) {
   return n;
 }
  
-// Read shader from file
+// Read shader from file 从文件中读取着色器 
 function readShaderFile(gl, fileName, shader) {
   var request = new XMLHttpRequest();
 
@@ -97,15 +97,15 @@ function readShaderFile(gl, fileName, shader) {
   request.send();                      // Send the request
 }
 
-// The shader is loaded from file
+// The shader is loaded from file 从文件加载着色器
 function onReadShader(gl, fileString, shader) {
-  if (shader == 'v') { // Vertex shader
+  if (shader == 'v') { // Vertex shader 顶点着色器
     VSHADER_SOURCE = fileString;
   } else 
-  if (shader == 'f') { // Fragment shader
+  if (shader == 'f') { // Fragment shader 片元着色器
     FSHADER_SOURCE = fileString;
   }
-  // When both are available, call start().
+  // When both are available, call start(). 如果两者均可用，则调用start（）。
   if (VSHADER_SOURCE && FSHADER_SOURCE) start(gl);
 }
 

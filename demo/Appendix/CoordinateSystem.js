@@ -25,8 +25,11 @@ function main() {
   initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE);   // Initialize shaders
   var n = initVertexBuffers(gl);      // Set vertex coordinates and colors
 
+  // gl.enable(gl.DEPTH_TEST)
+
   gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Specify the color for clearing <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);      // Clear <canvas>
+  // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLES, 0, n);  // Draw the triangles
 }
 
@@ -47,8 +50,8 @@ function initVertexBuffers(gl) {
   gl.bindBuffer(gl.ARRAY_BUFFER, pcbuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pc, gl.STATIC_DRAW);
 
-  var FSIZE = pc.BYTES_PER_ELEMENT;   // The number of byte
-  var STRIDE = numVertex + numColor;　// Stride
+  var FSIZE = pc.BYTES_PER_ELEMENT;   // The number of byte 字节数 
+  var STRIDE = numVertex + numColor;　// Stride 计算步进量
 
   // Assign the vertex coordinates to attribute variable and enable the assignment
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
