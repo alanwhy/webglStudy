@@ -1,9 +1,9 @@
 #### ch02
 
+- [DrawRectangle](https://alanwhy.github.io/webglStudy/demo/ch02/DrawRectangle.html)
 - [HelloPoint1](https://alanwhy.github.io/webglStudy/demo/ch02/HelloPoint1.html)
 - [HelloPoint2](https://alanwhy.github.io/webglStudy/demo/ch02/HelloPoint2.html)
 - [HelloCanvas](https://alanwhy.github.io/webglStudy/demo/ch02/HelloCanvas.html)
-- [DrawRectangle](https://alanwhy.github.io/webglStudy/demo/ch02/DrawRectangle.html)
 - [ColoredPoints](https://alanwhy.github.io/webglStudy/demo/ch02/ColoredPoints.html)
 - [ClickedPoints](https://alanwhy.github.io/webglStudy/demo/ch02/ClickedPoints.html)
 
@@ -117,7 +117,6 @@
 - [ThreeDUI](https://alanwhy.github.io/webglStudy/demo/gifts/ThreeDUI.html)
 - [Wave](https://alanwhy.github.io/webglStudy/demo/gifts/Wave.html)
 - [WorldCoordinate](https://alanwhy.github.io/webglStudy/demo/gifts/WorldCoordinate.html)
-
 
 #### custom demo
 
