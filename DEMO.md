@@ -117,3 +117,8 @@
 - [ThreeDUI](https://alanwhy.github.io/webglStudy/demo/gifts/ThreeDUI.html)
 - [Wave](https://alanwhy.github.io/webglStudy/demo/gifts/Wave.html)
 - [WorldCoordinate](https://alanwhy.github.io/webglStudy/demo/gifts/WorldCoordinate.html)
+
+
+#### custom demo
+
+- [Earth](https://alanwhy.github.io/webglStudy/demo/earth/index.html)
