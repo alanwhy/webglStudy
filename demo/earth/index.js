@@ -67,7 +67,7 @@ function start() {
   }
 
   // 添加监听事件
-  var currentAngle = [0.0, 0.0];
+  // var currentAngle = [0.0, 0.0];
   initEventHandlers(currentAngle)
 
   let u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
@@ -280,11 +280,13 @@ function initEventHandlers() {
     let deltaX = newMouseX - lastMouseX;
     let deltaY = newMouseY - lastMouseY;
 
+    console.log(deltaX, deltaY)
+
     let newRotationMatrix = new Matrix4();
 
     newRotationMatrix.setIdentity();
-    newRotationMatrix.rotate(deltaX / 10, 0, 1, 0)
-    newRotationMatrix.rotate(deltaY / 10, 1, 0, 0)
+    newRotationMatrix.rotate(deltaX / 3, 0, 1, 0)
+    newRotationMatrix.rotate(deltaY / 3, 1, 0, 0)
 
     RotationMatrix = newRotationMatrix.multiply(RotationMatrix);
 

@@ -168,6 +168,7 @@ function initEventHandlers(canvas, currentAngle) {
 var g_MvpMatrix = new Matrix4(); // Model view projection matrix 模型视图投影矩阵 
 function draw(gl, n, viewProjMatrix, u_MvpMatrix, currentAngle) {
   // Caliculate The model view projection matrix and pass it to u_MvpMatrix 计算模型视图投影矩阵并将其传递给u_MvpMatrix
+  // console.log(currentAngle);
   g_MvpMatrix.set(viewProjMatrix);
   g_MvpMatrix.rotate(currentAngle[0], 1.0, 0.0, 0.0); // Rotation around x-axis 绕x轴旋转
   g_MvpMatrix.rotate(currentAngle[1], 0.0, 1.0, 0.0); // Rotation around y-axis 绕y轴旋转 

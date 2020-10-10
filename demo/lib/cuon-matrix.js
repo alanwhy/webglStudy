@@ -27,7 +27,7 @@ var Matrix4 = function(opt_src) {
 };
 
 /**
- * Set the identity matrix.
+ * Set the identity matrix. 设置单位矩阵。
  * @return this
  */
 Matrix4.prototype.setIdentity = function() {
@@ -570,6 +570,10 @@ Matrix4.prototype.setRotate = function(angle, x, y, z) {
  * @param y The Y coordinate of vector of rotation axis.
  * @param z The Z coordinate of vector of rotation axis.
  * @return this
+ */
+/**
+ * 将矩阵乘以从右旋转。
+ * 旋转轴的矢量可能未标准化。
  */
 Matrix4.prototype.rotate = function(angle, x, y, z) {
   return this.concat(new Matrix4().setRotate(angle, x, y, z));

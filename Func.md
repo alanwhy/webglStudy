@@ -2,6 +2,8 @@
 
 ## ch02
 
+`难度：⭐`
+
 1. 根据 id 获取元素后，再获取 WebGL 绘图上下文
 
 ```javascript
@@ -132,3 +134,9 @@ gl.uniform2f(location, v0, v1);
 gl.uniform3f(location, v0, v1, v2);
 gl.uniform4f(location, v0, v1, v2, v3);
 ```
+
+## ch03
+
+`难度：⭐⭐`
+
+
