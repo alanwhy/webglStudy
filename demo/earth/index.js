@@ -5,7 +5,7 @@ canvas.height = mapDom.offsetHeight
 
 let gl
 let VSHADER_SOURCE, FSHADER_SOURCE
-let dragging = false, lastMouseX = -1, lastMouseY = -1, currentAngle = [0.0, 0.0]
+let dragging = false, lastMouseX = -1, lastMouseY = -1
 let RotationMatrix = new Matrix4();
 RotationMatrix.setIdentity();
 
@@ -46,44 +46,24 @@ function onReadShader(fileString, shader) {
 }
 
 function start() {
-  if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
-    console.log('Failed to intialize shaders.');
-    return;
-  }
+  initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
 
   let n = initVertexBuffers();
-  if (n < 0) {
-    console.log('Failed to set the vertex information');
-    return;
-  }
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clear(gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
 
-  if (!initTextures('./../resources/earth.jpg')) {
-    console.log('Failed to init the texture');
-    return;
-  }
+  initTextures('./../resources/earth.jpg')
 
   // 添加监听事件
-  // var currentAngle = [0.0, 0.0];
-  initEventHandlers(currentAngle)
+  initEventHandlers()
 
   let u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
-  if (!u_MvpMatrix) {
-    console.log('Failed to get the storage location of uniform variable');
-    return;
-  }
 
-  // Calculate the view projection matrix
-  // var viewProjMatrix = new Matrix4();
-  // viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
-  // viewProjMatrix.lookAt(3.0, 3.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   var tick = function () {   // Start drawing
     draw(n, u_MvpMatrix);
-    // draw(n, viewProjMatrix, u_MvpMatrix, currentAngle);
     requestAnimationFrame(tick);
   };
   tick();
@@ -121,10 +101,6 @@ function initVertexBuffers() { // Create a sphere
       textureCoordData.push(u)
       textureCoordData.push(v)
 
-      // positions.push(si * sj);  // X
-      // positions.push(cj);       // Y
-      // positions.push(ci * sj);  // Z
-
       positions.push(x);  // X
       positions.push(y);  // Y
       positions.push(z);  // Z
@@ -141,9 +117,6 @@ function initVertexBuffers() { // Create a sphere
       indices.push(p2);
       indices.push(p1 + 1);
 
-      // indices.push(p1 + 1);
-      // indices.push(p2);
-      // indices.push(p2 + 1);
       indices.push(p2);
       indices.push(p2 + 1);
       indices.push(p1 + 1);
@@ -166,19 +139,11 @@ function initVertexBuffers() { // Create a sphere
 function initArrayBuffer(attribute, data, type, num) {
   // Create a buffer object
   var buffer = gl.createBuffer();
-  if (!buffer) {
-    console.log('Failed to create the buffer object');
-    return false;
-  }
   // Write date into the buffer object
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
   // Assign the buffer object to the attribute variable
   var a_attribute = gl.getAttribLocation(gl.program, attribute);
-  if (a_attribute < 0) {
-    console.log('Failed to get the storage location of ' + attribute);
-    return false;
-  }
   gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);
   // Enable the assignment of the buffer object to the attribute variable
   gl.enableVertexAttribArray(a_attribute);
@@ -188,22 +153,10 @@ function initArrayBuffer(attribute, data, type, num) {
 
 function initTextures(src) {
   let texture = gl.createTexture();
-  if (!texture) {
-    console.log('Failed to create the texture object');
-    return false;
-  }
 
   let u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
-  if (!u_Sampler) {
-    console.log('Failed to get the storage location of u_Sampler');
-    return false;
-  }
 
   let image = new Image();
-  if (!image) {
-    console.log('Failed to create the image object');
-    return false;
-  }
 
   image.onload = function () {
     loadTexture(image, texture, u_Sampler);
@@ -233,18 +186,6 @@ function loadTexture(image, texture, u_Sampler) {
   gl.uniform1i(u_Sampler, 0);
 }
 
-// var g_MvpMatrix = new Matrix4(); // Model view projection matrix 模型视图投影矩阵 
-// function draw(n, viewProjMatrix, u_MvpMatrix, currentAngle) {
-//   // Caliculate The model view projection matrix and pass it to u_MvpMatrix 计算模型视图投影矩阵并将其传递给u_MvpMatrix
-//   g_MvpMatrix.set(viewProjMatrix);
-//   g_MvpMatrix.rotate(currentAngle[0], 1.0, 0.0, 0.0); // Rotation around x-axis 绕x轴旋转
-//   g_MvpMatrix.rotate(currentAngle[1], 0.0, 1.0, 0.0); // Rotation around y-axis 绕y轴旋转 
-//   gl.uniformMatrix4fv(u_MvpMatrix, false, g_MvpMatrix.elements);
-
-//   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);     // Clear buffers
-//   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);   // Draw the cube
-// }
-
 function draw(n, u_MvpMatrix) {
   // Caliculate The model view projection matrix and pass it to u_MvpMatrix
   let viewProjMatrix = new Matrix4();
@@ -256,7 +197,7 @@ function draw(n, u_MvpMatrix) {
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_SHORT, 0);
-  //gl.drawElements(gl.LINE_LOOP, n, gl.UNSIGNED_SHORT, 0);
+  // gl.drawElements(gl.LINE_LOOP, n, gl.UNSIGNED_SHORT, 0);
 }
 
 function initEventHandlers() {
@@ -294,35 +235,5 @@ function initEventHandlers() {
     lastMouseY = newMouseY;
   }
 }
-
-// function initEventHandlers(currentAngle) {
-//   var dragging = false;         // Dragging or not 是否拖动 
-//   var lastX = -1, lastY = -1;   // Last position of the mouse 鼠标的最后位置 
-
-//   canvas.onmousedown = function (ev) {   // Mouse is pressed 按下鼠标 
-//     var x = ev.clientX, y = ev.clientY;
-//     // Start dragging if a mouse is in <canvas> 如果鼠标在<canvas>中，则开始拖动
-//     var rect = ev.target.getBoundingClientRect();
-//     if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
-//       lastX = x; lastY = y;
-//       dragging = true;
-//     }
-//   };
-
-//   canvas.onmouseup = function (ev) { dragging = false; }; // Mouse is released 释放鼠标
-
-//   canvas.onmousemove = function (ev) { // Mouse is moved 鼠标移动 
-//     var x = ev.clientX, y = ev.clientY;
-//     if (dragging) {
-//       var factor = 100 / canvas.height; // The rotation ratio 旋转因子
-//       var dx = factor * (x - lastX);
-//       var dy = factor * (y - lastY);
-//       // Limit x-axis rotation angle to -90 to 90 degrees 将x轴旋转角度限制为-90至90度
-//       currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
-//       currentAngle[1] = currentAngle[1] + dx;
-//     }
-//     lastX = x, lastY = y;
-//   };
-// }
 
 main()
