@@ -221,8 +221,6 @@ function initEventHandlers() {
     let deltaX = newMouseX - lastMouseX;
     let deltaY = newMouseY - lastMouseY;
 
-    console.log(deltaX, deltaY)
-
     let newRotationMatrix = new Matrix4();
 
     newRotationMatrix.setIdentity();

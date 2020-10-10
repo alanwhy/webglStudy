@@ -353,6 +353,9 @@ Matrix4.prototype.frustum = function(left, right, bottom, top, near, far) {
  * @param far The distances to the farther depth clipping plane. This value must be plus value.
  * @return this
  */
+/**
+ * Set the perspective projection matrix by fovy and aspect. 通过fovy和aspect设置透视投影矩阵
+ */
 Matrix4.prototype.setPerspective = function(fovy, aspect, near, far) {
   var e, rd, s, ct;
 
@@ -642,7 +645,7 @@ Matrix4.prototype.setLookAt = function(eyeX, eyeY, eyeZ, centerX, centerY, cente
 };
 
 /**
- * Multiply the viewing matrix from the right.
+ * Multiply the viewing matrix from the right. 从右边乘以观察矩阵
  * @param eyeX, eyeY, eyeZ The position of the eye point.
  * @param centerX, centerY, centerZ The position of the reference point.
  * @param upX, upY, upZ The direction of the up vector.
