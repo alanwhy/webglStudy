@@ -55,6 +55,7 @@ function start() {
   gl.enable(gl.DEPTH_TEST);
 
   initTextures('./../resources/earth.jpg')
+  // initTextures('../resources/sky.jpg')
 
   // 添加监听事件
   initEventHandlers()
@@ -79,6 +80,7 @@ function initVertexBuffers() { // Create a sphere
   var positions = []; // 存储x，y，z坐标
   var indices = []; // 三角形列表（索引值）
   var textureCoordData = []; // 存储纹理坐标u，v，纹理坐标与顶点坐标一一对应
+  var r = 0.6 // 设置球半径
 
   // Generate coordinates
   for (j = 0; j <= SPHERE_DIV; j++) {
@@ -101,9 +103,9 @@ function initVertexBuffers() { // Create a sphere
       textureCoordData.push(u)
       textureCoordData.push(v)
 
-      positions.push(x);  // X
-      positions.push(y);  // Y
-      positions.push(z);  // Z
+      positions.push(r * x);  // X
+      positions.push(r * y);  // Y
+      positions.push(r * z);  // Z
     }
   }
 
@@ -189,8 +191,10 @@ function loadTexture(image, texture, u_Sampler) {
 function draw(n, u_MvpMatrix) {
   // Caliculate The model view projection matrix and pass it to u_MvpMatrix
   let viewProjMatrix = new Matrix4();
-  viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
-  viewProjMatrix.lookAt(3.0, 3.0, 7.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  // 设置投影
+  viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 10.0);
+  // 设置视点初始位置
+  viewProjMatrix.lookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
   viewProjMatrix.multiply(RotationMatrix);
 
   gl.uniformMatrix4fv(u_MvpMatrix, false, viewProjMatrix.elements);

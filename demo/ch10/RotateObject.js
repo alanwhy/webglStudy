@@ -245,3 +245,267 @@ function loadTexture(gl, texture, u_Sampler, image) {
   // Pass the texure unit 0 to u_Sampler
   gl.uniform1i(u_Sampler, 0);
 }
+
+
+/* // RotateObject.js (c) 2012 matsuda and kanda
+// Vertex shader program
+var VSHADER_SOURCE =
+  'attribute vec4 a_Position;\n' +
+  'attribute vec2 a_TexCoord;\n' +
+  'uniform mat4 u_MvpMatrix;\n' +
+  'varying vec2 v_TexCoord;\n' +
+  'void main() {\n' +
+  '  gl_Position = u_MvpMatrix * a_Position;\n' +
+  '  v_TexCoord = a_TexCoord;\n' +
+  '}\n';
+
+// Fragment shader program
+var FSHADER_SOURCE =
+  '#ifdef GL_ES\n' +
+  'precision mediump float;\n' +
+  '#endif\n' +
+  'uniform sampler2D u_Sampler;\n' +
+  'varying vec2 v_TexCoord;\n' +
+  'void main() {\n' +
+  '  gl_FragColor = texture2D(u_Sampler, v_TexCoord);\n' +
+  '}\n';
+
+function main() {
+  // Retrieve <canvas> element
+  var canvas = document.getElementById('webgl');
+
+  // Get the rendering context for WebGL
+  var gl = getWebGLContext(canvas);
+  if (!gl) {
+    console.log('Failed to get the rendering context for WebGL');
+    return;
+  }
+
+  // Initialize shaders
+  if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+    console.log('Failed to intialize shaders.');
+    return;
+  }
+
+  // Set the vertex information
+  var n = initVertexBuffers(gl);
+  if (n < 0) {
+    console.log('Failed to set the vertex information');
+    return;
+  }
+
+  // Set the clear color and enable the depth test
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.enable(gl.DEPTH_TEST);
+
+  // Get the storage locations of uniform variables
+  var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
+  if (!u_MvpMatrix) {
+    console.log('Failed to get the storage location of uniform variable');
+    return;
+  }
+
+
+
+  // Register the event handler 注册事件处理程序 
+  var currentAngle = [0.0, 0.0]; // Current rotation angle ([x-axis, y-axis] degrees) [绕X轴旋转角度，绕Y轴旋转角度]
+  initEventHandlers(canvas, currentAngle);
+
+  // Set texture
+  if (!initTextures(gl)) {
+    console.log('Failed to intialize the texture.');
+    return;
+  }
+
+  var tick = function () {   // Start drawing
+    draw(gl, n, canvas, u_MvpMatrix, currentAngle);
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+function initVertexBuffers(gl) { // Create a sphere
+  var SPHERE_DIV = 50;
+
+  var i, ai, si, ci;
+  var j, aj, sj, cj;
+  var p1, p2;
+
+  var positions = [];
+  var indices = [];
+  var textureCoordData = []
+
+  // Generate coordinates
+  for (j = 0; j <= SPHERE_DIV; j++) {
+    aj = j * Math.PI / SPHERE_DIV;
+    sj = Math.sin(aj);
+    cj = Math.cos(aj);
+    for (i = 0; i <= SPHERE_DIV; i++) {
+      ai = i * 2 * Math.PI / SPHERE_DIV;
+      si = Math.sin(ai);
+      ci = Math.cos(ai);
+
+      // 纹理坐标
+      textureCoordData.push(1 - (i / SPHERE_DIV));
+      textureCoordData.push(1 - (j / SPHERE_DIV));
+
+      positions.push(si * sj);  // X
+      positions.push(cj);       // Y
+      positions.push(ci * sj);  // Z
+    }
+  }
+
+  // Generate indices
+  for (j = 0; j < SPHERE_DIV; j++) {
+    for (i = 0; i < SPHERE_DIV; i++) {
+      p1 = j * (SPHERE_DIV + 1) + i;
+      p2 = p1 + (SPHERE_DIV + 1);
+
+      indices.push(p1);
+      indices.push(p2);
+      indices.push(p1 + 1);
+
+      indices.push(p1 + 1);
+      indices.push(p2);
+      indices.push(p2 + 1);
+    }
+  }
+
+  // Write the vertex property to buffers (coordinates and normals)
+  // Same data can be used for vertex and normal
+  // In order to make it intelligible, another buffer is prepared separately
+  if (!initArrayBuffer(gl, 'a_Position', new Float32Array(positions), gl.FLOAT, 3)) return -1;
+  if (!initArrayBuffer(gl, 'a_TexCoord', new Float32Array(textureCoordData), gl.FLOAT, 2)) return -1;
+
+  // Unbind the buffer object
+  gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+  // Write the indices to the buffer object
+  var indexBuffer = gl.createBuffer();
+  if (!indexBuffer) {
+    console.log('Failed to create the buffer object');
+    return -1;
+  }
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+  return indices.length;
+}
+
+function initArrayBuffer(gl, attribute, data, type, num) {
+  // Create a buffer object
+  var buffer = gl.createBuffer();
+  if (!buffer) {
+    console.log('Failed to create the buffer object');
+    return false;
+  }
+  // Write date into the buffer object
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  // Assign the buffer object to the attribute variable
+  var a_attribute = gl.getAttribLocation(gl.program, attribute);
+  if (a_attribute < 0) {
+    console.log('Failed to get the storage location of ' + attribute);
+    return false;
+  }
+  gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);
+  // Enable the assignment of the buffer object to the attribute variable
+  gl.enableVertexAttribArray(a_attribute);
+
+  return true;
+}
+
+function initEventHandlers(canvas, currentAngle) {
+  var dragging = false;         // Dragging or not 是否拖动 
+  var lastX = -1, lastY = -1;   // Last position of the mouse 鼠标的最后位置 
+
+  canvas.onmousedown = function (ev) {   // Mouse is pressed 按下鼠标 
+    var x = ev.layerX, y = ev.layerY;
+    // Start dragging if a mouse is in <canvas> 如果鼠标在<canvas>中，则开始拖动
+    var rect = ev.target.getBoundingClientRect();
+    if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
+      lastX = x; lastY = y;
+      dragging = true;
+    }
+  };
+
+  canvas.onmouseup = function (ev) { dragging = false; }; // Mouse is released 释放鼠标
+
+  canvas.onmouseout = function (ev) { dragging = false }
+
+  canvas.onmousemove = function (ev) { // Mouse is moved 鼠标移动 
+    var x = ev.layerX, y = ev.layerY;
+    if (dragging) {
+      var factor = 100 / canvas.height; // The rotation ratio 旋转因子
+      var dx = factor * (x - lastX);
+      var dy = factor * (y - lastY);
+      // Limit x-axis rotation angle to -90 to 90 degrees 将x轴旋转角度限制为-90至90度
+      // currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
+      currentAngle[0] = currentAngle[0] + dy;
+      currentAngle[1] = currentAngle[1] + dx;
+    }
+    lastX = x, lastY = y;
+  };
+}
+
+// var g_MvpMatrix = new Matrix4(); // Model view projection matrix 模型视图投影矩阵 
+function draw(gl, n, canvas, u_MvpMatrix, currentAngle) {
+  // Caliculate The model view projection matrix and pass it to u_MvpMatrix 计算模型视图投影矩阵并将其传递给u_MvpMatrix
+  // Calculate the view projection matrix
+  var viewProjMatrix = new Matrix4();
+  viewProjMatrix.setPerspective(30.0, canvas.width / canvas.height, 1.0, 100.0);
+  viewProjMatrix.lookAt(0,0,3 , 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  // g_MvpMatrix.set(viewProjMatrix);
+  viewProjMatrix.rotate(currentAngle[0], 1.0, 0.0, 0.0); // Rotation around x-axis 绕x轴旋转
+  viewProjMatrix.rotate(currentAngle[1], 0.0, 1.0, 0.0); // Rotation around y-axis 绕y轴旋转 
+  gl.uniformMatrix4fv(u_MvpMatrix, false, viewProjMatrix.elements);
+
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);     // Clear buffers
+  gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_SHORT, 0);   // Draw the cube
+}
+
+function initTextures(gl) {
+  // Create a texture object
+  var texture = gl.createTexture();
+  if (!texture) {
+    console.log('Failed to create the texture object');
+    return false;
+  }
+
+  // Get the storage location of u_Sampler
+  var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+  if (!u_Sampler) {
+    console.log('Failed to get the storage location of u_Sampler');
+    return false;
+  }
+
+  // Create the image object
+  var image = new Image();
+  if (!image) {
+    console.log('Failed to create the image object');
+    return false;
+  }
+  // Register the event handler to be called when image loading is completed
+  image.onload = function () { loadTexture(gl, texture, u_Sampler, image); };
+  // Tell the browser to load an Image
+  image.src = '../resources/sky.jpg';
+
+  return true;
+}
+
+function loadTexture(gl, texture, u_Sampler, image) {
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);  // Flip the image Y coordinate
+  // Activate texture unit0
+  gl.activeTexture(gl.TEXTURE0);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the image to texture
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+
+  // Pass the texure unit 0 to u_Sampler
+  gl.uniform1i(u_Sampler, 0);
+} */
+
