@@ -47,7 +47,7 @@ function main() {
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-  // Set texture
+  // Set texture 配置纹理
   if (!initTextures(gl, n)) {
     console.log('Failed to intialize the texture.');
     return;
@@ -57,10 +57,10 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesTexCoords = new Float32Array([
     // Vertex coordinate, Texture coordinate 修改了纹理的坐标
-    -0.5,  0.5,   -0.3, 1.7,
+    -0.5,  0.5,   -0.3,  1.7,
     -0.5, -0.5,   -0.3, -0.2,
-     0.5,  0.5,   1.7, 1.7,
-     0.5, -0.5,   1.7, -0.2
+     0.5,  0.5,    1.7,  1.7,
+     0.5, -0.5,    1.7, -0.2
   ]);
   var n = 4; // The number of vertices
 
@@ -76,15 +76,16 @@ function initVertexBuffers(gl) {
   gl.bufferData(gl.ARRAY_BUFFER, verticesTexCoords, gl.STATIC_DRAW);
 
   var FSIZE = verticesTexCoords.BYTES_PER_ELEMENT;
+  //Get the storage location of a_Position, assign and enable buffer
   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
   if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
     return -1;
   }
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE * 4, 0);
-  gl.enableVertexAttribArray(a_Position);
+  gl.enableVertexAttribArray(a_Position);  // Enable the assignment of the buffer object
 
-  // Get the storage location of a_TexCoord
+  // Get the storage location of a_TexCoord 将纹理坐标分配给a_Texcoord并开启它
   var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
   if (a_TexCoord < 0) {
     console.log('Failed to get the storage location of a_TexCoord');
@@ -102,22 +103,21 @@ function initVertexBuffers(gl) {
 }
 
 function initTextures(gl, n) {
-  // Create a texture object
+  // Create a texture object 创建纹理对象
   var texture = gl.createTexture();
   if (!texture) {
     console.log('Failed to create the texture object');
     return false;
   }
 
-  // Get the storage location of u_Sampler
+  // Get the storage location of u_Sampler 获取u_Sampler的储存位置
   var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
   if (!u_Sampler) {
     console.log('Failed to get the storage location of u_Sampler');
     return false;
   }
-
-  // Create the image object
-  var image = new Image();
+  // Create the image object 创建一个image对象
+  var image = new Image();  
   if (!image) {
     console.log('Failed to create the image object');
     return false;
@@ -139,15 +139,16 @@ function loadTexture(gl, n, texture, u_Sampler, image) {
 
   // Set the texture parameter
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+
   // Set the image to texture
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
   // Set the texture unit 0 to the sampler
   gl.uniform1i(u_Sampler, 0);
-  
-  // Clear <canvas>
-  gl.clear(gl.COLOR_BUFFER_BIT);
 
-  // Draw the rectangle
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+  gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 }

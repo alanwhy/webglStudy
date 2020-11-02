@@ -57,10 +57,10 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesTexCoords = new Float32Array([
     // Vertex coordinates, texture coordinate 顶点坐标，纹理坐标
-    -0.5, 0.5, 0.0, 1.0,
-    -0.5, -0.5, 0.0, 0.0,
-    0.5, 0.5, 1.0, 1.0,
-    0.5, -0.5, 1.0, 0.0,
+    -0.5, 0.5,   0.0, 1.0,
+    -0.5, -0.5,  0.0, 0.0,
+    0.5,  0.5,   1.0, 1.0,
+    0.5,  -0.5,  1.0, 0.0,
   ]);
   var n = 4; // The number of vertices
 
@@ -93,13 +93,15 @@ function initVertexBuffers(gl) {
   }
   // Assign the buffer object to a_TexCoord variable
   gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 4, FSIZE * 2);
-  gl.enableVertexAttribArray(a_TexCoord);  // Enable the assignment of the buffer object
+  // Enable the assignment of the buffer object
+  gl.enableVertexAttribArray(a_TexCoord);
 
   return n;
 }
 
 function initTextures(gl, n) {
-  var texture = gl.createTexture();   // Create a texture object 创建纹理对象
+  // Create a texture object 创建纹理对象
+  var texture = gl.createTexture();
   if (!texture) {
     console.log('Failed to create the texture object');
     return false;
@@ -111,7 +113,8 @@ function initTextures(gl, n) {
     console.log('Failed to get the storage location of u_Sampler');
     return false;
   }
-  var image = new Image();  // Create the image object 创建一个image对象
+  // Create the image object 创建一个image对象
+  var image = new Image();  
   if (!image) {
     console.log('Failed to create the image object');
     return false;
