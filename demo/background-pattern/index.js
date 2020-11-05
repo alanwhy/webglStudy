@@ -96,8 +96,8 @@ function initVertexBuffers() { // Create a sphere
       let z = si * sj
 
       // 纹理坐标
-      let u = (1 - (i / SPHERE_DIV)) * 50;
-      let v = (1 - (j / SPHERE_DIV)) * 50;
+      let u = (1 - (i / SPHERE_DIV)) * 20;
+      let v = (1 - (j / SPHERE_DIV)) * 20;
 
       textureCoordData.push(u)
       textureCoordData.push(v)
