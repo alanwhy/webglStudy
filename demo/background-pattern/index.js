@@ -54,7 +54,7 @@ function start() {
   gl.clear(gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
 
-  initTextures('./../resources/blueflower.jpg')
+  initTextures('./../resources/atlas_mindcraft.png')
 
   // 添加监听事件
   initEventHandlers()
@@ -96,8 +96,8 @@ function initVertexBuffers() { // Create a sphere
       let z = si * sj
 
       // 纹理坐标
-      let u = (1 - (i / SPHERE_DIV)) * 20;
-      let v = (1 - (j / SPHERE_DIV)) * 20;
+      let u = (1 - (i / SPHERE_DIV)) * 1;
+      let v = (1 - (j / SPHERE_DIV)) * 1;
 
       textureCoordData.push(u)
       textureCoordData.push(v)
@@ -156,10 +156,22 @@ function initTextures(src) {
   let texture = gl.createTexture();
 
   let u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+  let u_unit_width = gl.getUniformLocation(gl.program, 'u_unit_width');
+  let u_unit_height = gl.getUniformLocation(gl.program, 'u_unit_height');
+  let u_img_width = gl.getUniformLocation(gl.program, 'u_img_width');
+  let u_img_height = gl.getUniformLocation(gl.program, 'u_img_height');
+  let u_img_px_width = gl.getUniformLocation(gl.program, 'u_img_px_width');
+  let u_img_px_height = gl.getUniformLocation(gl.program, 'u_img_px_height');
 
   let image = new Image();
 
   image.onload = function () {
+    gl.uniform1f(u_unit_width, 64.0);
+    gl.uniform1f(u_unit_height, 64.0);
+    gl.uniform1f(u_img_width, 1024.0);
+    gl.uniform1f(u_img_height, 1024.0);
+    gl.uniform1f(u_img_px_width, 0.0);
+    gl.uniform1f(u_img_px_height, 1024.0);
     loadTexture(image, texture, u_Sampler);
   }
   image.src = src;

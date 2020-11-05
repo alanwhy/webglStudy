@@ -14,7 +14,7 @@ const ATTR_UV_LOC			= 2;
 class GlUtil{
 
 	//Convert Hex colors to float arrays, can batch process a list into one big array.
-	//example : GlUtil.rgbArray("#FF0000","00FF00","#0000FF");
+	//example : GlUtil.rgbArray("#FF0000","#00FF00","#0000FF");
 	static rgbArray(){
 		if(arguments.length == 0) return null;
 		var rtn = [];
