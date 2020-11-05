@@ -170,7 +170,7 @@ function initTextures(src) {
     gl.uniform1f(u_unit_height, 64.0);
     gl.uniform1f(u_img_width, 1024.0);
     gl.uniform1f(u_img_height, 1024.0);
-    gl.uniform1f(u_img_px_width, 0.0);
+    gl.uniform1f(u_img_px_width, 64.0 * 5);
     gl.uniform1f(u_img_px_height, 1024.0);
     loadTexture(image, texture, u_Sampler);
   }
