@@ -55,13 +55,48 @@ function main() {
 }
 
 function initVertexBuffers(gl) {
+  // var verticesTexCoords = new Float32Array([
+  //   // Vertex coordinate, Texture coordinate 修改了纹理的坐标
+  //   -0.5,  0.5,   -0.3,  1.7,
+  //   -0.5, -0.5,   -0.3, -0.2,
+  //    0.5,  0.5,    1.7,  1.7,
+  //    0.5, -0.5,    1.7, -0.2
+  // ]);
+  // var verticesTexCoords = new Float32Array([
+  //   // Vertex coordinate, Texture coordinate 修改了纹理的坐标
+  //   -0.5,  0.5,   -1,  1,
+  //   -0.5, -0.5,   -1, -1,
+  //    0.5,  0.5,    1,  1,
+  //    0.5, -0.5,    1, -1
+  // ]);
   var verticesTexCoords = new Float32Array([
     // Vertex coordinate, Texture coordinate 修改了纹理的坐标
-    -0.5,  0.5,   -0.3,  1.7,
-    -0.5, -0.5,   -0.3, -0.2,
-     0.5,  0.5,    1.7,  1.7,
-     0.5, -0.5,    1.7, -0.2
+    -0.5,  0.5,   -0.5,  0.5,
+    -0.5, -0.5,   -0.5, -0.5,
+     0.5,  0.5,    0.5,  0.5,
+     0.5, -0.5,    0.5, -0.5
   ]);
+  // var verticesTexCoords = new Float32Array([
+  //   // Vertex coordinate, Texture coordinate 修改了纹理的坐标
+  //   -1,  1,   -0.5,  0.5,
+  //   -1, -1,   -0.5, -0.5,
+  //    1,  1,    0.5,  0.5,
+  //    1, -1,    0.5, -0.5
+  // ]);
+  // var verticesTexCoords = new Float32Array([
+  //   // Vertex coordinate, Texture coordinate 修改了纹理的坐标
+  //   -0.5,  0.5,   -2,  2,
+  //   -0.5, -0.5,   -2, -2,
+  //    0.5,  0.5,    2,  2,
+  //    0.5, -0.5,    2, -2
+  // ]);
+  // var verticesTexCoords = new Float32Array([
+  //   // Vertex coordinate, Texture coordinate 修改了纹理的坐标
+  //   -1,  1,   -0.5,  0.5,
+  //   -1, -1,   -0.5, -0.5,
+  //    1,  1,    0.5,  0.5,
+  //    1, -1,    0.5, -0.5
+  // ]);
   var n = 4; // The number of vertices
 
   // Create a buffer object
